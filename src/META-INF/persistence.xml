@@ -1,0 +1,23 @@
+<persistence>
+    <persistence-unit name="Entities">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.example.petstore.Entities.Director</class>
+        <class>com.example.petstore.Entities.Goods</class>
+        <class>com.example.petstore.Entities.Manager</class>
+        <class>com.example.petstore.Entities.Pet</class>
+        <class>com.example.petstore.Entities.PetStore</class>
+        <class>com.example.petstore.Entities.Seller</class>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="root"/>
+            <property name="eclipselink.logging.level" value="SEVERE"/>
+            <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+
+        </properties>
+
+    </persistence-unit>
+</persistence>
