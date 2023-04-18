@@ -10,10 +10,10 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID Id;
-    @ManyToOne
-    public Species Species;
     public LocalDate DateOfBirth;
     public double Price;
+    @ManyToOne
+    public Species Species;
 
     @ManyToOne
     public PetStore PetStore;
