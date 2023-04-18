@@ -12,7 +12,7 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID Id;
     public String Name;
-    public String Gender;
+    public Sex Gender;
     public double Salary;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = {
@@ -21,7 +21,7 @@ public class Seller {
     }, mappedBy = "Sellers")
     public Set<PetStore> PetStores=new HashSet<>();
 
-    public Seller(UUID id, String name, String gender, double salary, Set<PetStore> petStores) {
+    public Seller(UUID id, String name, Sex gender, double salary, Set<PetStore> petStores) {
         Id = id;
         Name = name;
         Gender = gender;

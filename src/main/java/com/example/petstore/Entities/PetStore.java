@@ -31,10 +31,12 @@ public class PetStore {
     @OneToMany(mappedBy = "PetStore", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Manager> Managers=new ArrayList<>();
 
-    @OneToOne(mappedBy = "PetStore")
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "DirectorId", referencedColumnName = "Id")
     public Director Director;
 
-    public PetStore(UUID id, String name, int rating, Set<Seller> sellers, List<com.example.petstore.Entities.Goods> goods, List<Pet> pets, List<Manager> managers, com.example.petstore.Entities.Director director) {
+    public PetStore(UUID id, String name, int rating, Set<Seller> sellers, List<Goods> goods, List<Pet> pets, List<Manager> managers, Director director) {
         Id = id;
         Name = name;
         Rating = rating;

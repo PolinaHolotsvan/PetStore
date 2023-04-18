@@ -2,6 +2,7 @@ package com.example.petstore.Entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -9,19 +10,18 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID Id;
-    public String Species;
-    public String Breed;
-    public double Age;
+    @ManyToOne
+    public Species Species;
+    public LocalDate DateOfBirth;
     public double Price;
 
     @ManyToOne
     public PetStore PetStore;
 
-    public Pet(UUID id, String species, String breed, double age, double price, com.example.petstore.Entities.PetStore petStore) {
+    public Pet(UUID id, Species species, LocalDate dateOfBirth, double price, PetStore petStore) {
         Id = id;
         Species = species;
-        Breed = breed;
-        Age = age;
+        DateOfBirth = dateOfBirth;
         Price = price;
         PetStore = petStore;
     }

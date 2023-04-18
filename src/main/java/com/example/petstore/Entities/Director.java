@@ -10,14 +10,13 @@ public class Director {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID Id;
     public String Name;
-    public String Gender;
+    public Sex Gender;
     public double Salary;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "PetStoreId", referencedColumnName = "Id")
+    @OneToOne(mappedBy = "Director")
     public PetStore PetStore;
 
-    public Director(UUID id, String name, String gender, double salary, com.example.petstore.Entities.PetStore petStore) {
+    public Director(UUID id, String name, Sex gender, double salary, com.example.petstore.Entities.PetStore petStore) {
         Id = id;
         Name = name;
         Gender = gender;
