@@ -1,4 +1,4 @@
-package com.example.petstore;
+package com.example.petstore.Configurations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

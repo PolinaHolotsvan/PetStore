@@ -26,8 +26,8 @@ public class PetStoreController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping("/add")
-    public void add(@RequestBody PetStoreCreateModel model){
+    @PostMapping("/create")
+    public void create(@RequestBody PetStoreCreateModel model){
         EntityManager em=entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         PetStore petStore=modelMapper.map(model, PetStore.class);
@@ -64,8 +64,8 @@ public class PetStoreController {
         em.getTransaction().commit();
     }
 
-    @PutMapping("/updateMat6")
-    public void updateMat6(@RequestBody PetStoreUpdateModel model){
+    @PutMapping("/update")
+    public void update(@RequestBody PetStoreUpdateModel model){
         EntityManager em=entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         PetStore petStore=em.find(PetStore.class, model.Id);

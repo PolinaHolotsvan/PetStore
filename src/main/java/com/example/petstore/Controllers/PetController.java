@@ -17,4 +17,9 @@ public class PetController {
     public PetController(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
+    public void delete(){};
+    public void update(){};
+    public void create(){};
+    public void getAll(){};
+    public void getById(){};
 }
