@@ -88,11 +88,11 @@ public class PetStore {
 
     public void setDirector(Director director) {
         Director = director;
-        director.PetStore=this;
+        director.setPetStore(this);
     }
     public void removeDirector(Director director) {
         Director = null;
-        director.PetStore=null;
+        director.setPetStore(null);
     }
 
 }

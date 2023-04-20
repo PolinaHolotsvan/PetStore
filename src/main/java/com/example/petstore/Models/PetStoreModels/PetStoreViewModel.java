@@ -12,5 +12,5 @@ public class PetStoreViewModel extends PetStoreUpdateModel{
     public List<Goods> Goods=new ArrayList<>();
     public List<Pet> Pets=new ArrayList<>();
     public List<Manager> Managers=new ArrayList<>();
-    public Director Director;
+
 }

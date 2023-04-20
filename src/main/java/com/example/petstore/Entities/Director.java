@@ -8,13 +8,13 @@ import java.util.UUID;
 public class Director {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public UUID Id;
-    public String Name;
-    public Sex Gender;
-    public double Salary;
+    private UUID Id;
+    private String Name;
+    private Sex Gender;
+    private double Salary;
 
     @OneToOne(mappedBy = "Director")
-    public PetStore PetStore;
+    private PetStore PetStore;
 
     public Director(UUID id, String name, Sex gender, double salary, com.example.petstore.Entities.PetStore petStore) {
         Id = id;
@@ -25,5 +25,41 @@ public class Director {
     }
 
     public Director() {
+    }
+
+    public UUID getId() {
+        return Id;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public Sex getGender() {
+        return Gender;
+    }
+
+    public void setGender(Sex gender) {
+        Gender = gender;
+    }
+
+    public double getSalary() {
+        return Salary;
+    }
+
+    public void setSalary(double salary) {
+        Salary = salary;
+    }
+
+    public com.example.petstore.Entities.PetStore getPetStore() {
+        return PetStore;
+    }
+
+    public void setPetStore(com.example.petstore.Entities.PetStore petStore) {
+        PetStore = petStore;
     }
 }
