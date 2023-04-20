@@ -36,7 +36,6 @@ public class PetStoreController {
         Director director = em.find(Director.class, model.getDirectorId());
         petStore.setDirector(director);
 
-        em.persist(petStore);
         em.merge(director);
         em.getTransaction().commit();
     }

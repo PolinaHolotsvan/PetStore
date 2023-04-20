@@ -10,7 +10,6 @@ import java.util.UUID;
 @Data
 public class Pet {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID Id;
     private LocalDate DateOfBirth;
     private double Price;

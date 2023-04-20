@@ -15,6 +15,7 @@ public class Director {
     private Sex Gender;
     private double Salary;
 
-    @OneToOne(mappedBy = "Director")
+    @OneToOne(mappedBy = "Director", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
     private PetStore PetStore;
 }

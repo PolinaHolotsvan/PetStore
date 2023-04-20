@@ -34,7 +34,7 @@ public class PetStore {
     private List<Manager> Managers=new ArrayList<>();
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DirectorId", referencedColumnName = "Id")
     private Director Director;
 

@@ -32,11 +32,15 @@ public class PetController {
     public void delete(@RequestParam UUID id) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
+
         Pet pet = em.find(Pet.class, id);
-        PetStore petStore = em.find(PetStore.class, pet.PetStore.Id);
+        PetStore petStore = em.find(PetStore.class, pet.getPetStore().getId());
         petStore.removePet(pet);
-        Species species = em.find(Species.class, pet.Species.Id);
+
+        Species species = em.find(Species.class, pet.getSpecies().getName());
         species.removePet(pet);
+
+        em.remove(pet);
         em.persist(species);
         em.persist(petStore);
         em.getTransaction().commit();
@@ -66,6 +70,8 @@ public class PetController {
 
         Species species = em.find(Species.class, model.getSpeciesId());
         species.addPet(pet);
+
+        pet.setId(UUID.randomUUID());
 
         em.persist(pet);
         em.merge(petStore);
