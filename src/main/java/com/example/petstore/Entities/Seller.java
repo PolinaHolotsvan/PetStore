@@ -1,34 +1,25 @@
 package com.example.petstore.Entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Data
 public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public UUID Id;
-    public String Name;
-    public Sex Gender;
-    public double Salary;
+    private UUID Id;
+    private String Name;
+    private Sex Gender;
+   private double Salary;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = {
         CascadeType.PERSIST,
                 CascadeType.MERGE
     }, mappedBy = "Sellers")
-    public Set<PetStore> PetStores=new HashSet<>();
-
-    public Seller(UUID id, String name, Sex gender, double salary, Set<PetStore> petStores) {
-        Id = id;
-        Name = name;
-        Gender = gender;
-        Salary = salary;
-        PetStores = petStores;
-    }
-
-    public Seller() {
-    }
+    private Set<PetStore> PetStores=new HashSet<>();
 }

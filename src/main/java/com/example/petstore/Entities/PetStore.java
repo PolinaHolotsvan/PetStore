@@ -1,16 +1,18 @@
 package com.example.petstore.Entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.*;
 
 @Entity
+@Data
 public class PetStore {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public UUID Id;
-    public String Name;
-    public int Rating;
+    private UUID Id;
+    private String Name;
+    private int Rating;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST,
@@ -20,70 +22,56 @@ public class PetStore {
     @JoinTable(name = "EmploymentContract",
             joinColumns = { @JoinColumn(name = "PetStoreId") },
             inverseJoinColumns = { @JoinColumn(name = "SellerId") })
-    public Set<Seller> Sellers = new HashSet<>();
+    private Set<Seller> Sellers = new HashSet<>();
 
     @OneToMany(mappedBy = "PetStore", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Goods> Goods=new ArrayList<>();
+    private List<Goods> Goods=new ArrayList<>();
 
     @OneToMany(mappedBy = "PetStore", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Pet> Pets=new ArrayList<>();
+    private List<Pet> Pets=new ArrayList<>();
 
     @OneToMany(mappedBy = "PetStore", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Manager> Managers=new ArrayList<>();
+    private List<Manager> Managers=new ArrayList<>();
 
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "DirectorId", referencedColumnName = "Id")
-    public Director Director;
-
-    public PetStore(UUID id, String name, int rating, Set<Seller> sellers, List<Goods> goods, List<Pet> pets, List<Manager> managers, Director director) {
-        Id = id;
-        Name = name;
-        Rating = rating;
-        Sellers = sellers;
-        Goods = goods;
-        Pets = pets;
-        Managers = managers;
-        Director = director;
-    }
-
-    public PetStore() {
-    }
+    private Director Director;
 
     public void assignSellerToPetStore(Seller seller){
         Sellers.add(seller);
-        seller.PetStores.add(this);
+        seller.getPetStores().add(this);
     }
     public void removeSellerFromPetStore(Seller seller){
         Sellers.remove(seller);
-        seller.PetStores.remove(this);
+        seller.getPetStores().remove(this);
     }
 
     public void addGoods(Goods goods) {
         Goods.add(goods);
-        goods.PetStore=this;
+        goods.setPetStore(this);
     }
     public void removeGoods(Goods goods) {
         Goods.remove(goods);
-        goods.PetStore=null;
+        goods.setPetStore(null);
     }
 
     public void addManager(Manager manager) {
         Managers.add(manager);
-        manager.PetStore=this;
+        manager.setPetStore(this);
     }
     public void removeManager(Manager manager) {
         Managers.remove(manager);
-        manager.PetStore=null;
+        manager.setPetStore(null);
     }
 
     public void addPet(Pet pet) {
         Pets.add(pet);
-        pet.PetStore=this;
+        pet.setPetStore(this);
     }
     public void removePet(Pet pet) {
         Pets.remove(pet);
-        pet.PetStore=null;
+        pet.setPetStore(null);
     }
 
     public void setDirector(Director director) {

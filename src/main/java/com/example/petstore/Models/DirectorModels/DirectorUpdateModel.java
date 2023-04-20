@@ -1,15 +1,9 @@
 package com.example.petstore.Models.DirectorModels;
 
-import java.util.UUID;
+import lombok.Data;
 
+import java.util.UUID;
+@Data
 public class DirectorUpdateModel extends DirectorCreateModel{
     private UUID Id;
-
-    public UUID getId() {
-        return Id;
-    }
-
-    public void setId(UUID id) {
-        Id = id;
-    }
 }

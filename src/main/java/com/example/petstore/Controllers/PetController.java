@@ -47,7 +47,7 @@ public class PetController {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
-        Pet pet = em.find(Pet.class, model.Id);
+        Pet pet = em.find(Pet.class, model.getId());
         pet = modelMapper.map(model, Pet.class);
 
         em.merge(pet);
@@ -61,10 +61,10 @@ public class PetController {
 
         Pet pet = modelMapper.map(model, Pet.class);
 
-        PetStore petStore = em.find(PetStore.class, model.PetStoreId);
+        PetStore petStore = em.find(PetStore.class, model.getPetStoreId());
         petStore.addPet(pet);
 
-        Species species = em.find(Species.class, model.SpeciesId);
+        Species species = em.find(Species.class, model.getSpeciesId());
         species.addPet(pet);
 
         em.persist(pet);

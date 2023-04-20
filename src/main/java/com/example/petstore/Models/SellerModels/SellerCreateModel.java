@@ -1,9 +1,11 @@
 package com.example.petstore.Models.SellerModels;
 
 import com.example.petstore.Entities.Sex;
+import lombok.Data;
 
+@Data
 public class SellerCreateModel {
-    public String Name;
-    public Sex Gender;
-    public double Salary;
+    private String Name;
+    private Sex Gender;
+    private double Salary;
 }

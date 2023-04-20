@@ -1,7 +1,9 @@
 package com.example.petstore.Models.PetStoreModels;
 
-import java.util.UUID;
+import lombok.Data;
 
+import java.util.UUID;
+@Data
 public class PetStoreUpdateModel extends PetStoreCreateModel{
-    public UUID Id;
+    private UUID Id;
 }

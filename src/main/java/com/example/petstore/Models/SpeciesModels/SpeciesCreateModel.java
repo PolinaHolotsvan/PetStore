@@ -1,6 +1,9 @@
 package com.example.petstore.Models.SpeciesModels;
 
+import lombok.Data;
+
+@Data
 public class SpeciesCreateModel {
-    public String Name;
-    public String Description;
+    private String Name;
+    private String Description;
 }

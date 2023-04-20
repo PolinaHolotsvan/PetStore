@@ -1,11 +1,12 @@
 package com.example.petstore.Models.PetStoreModels;
 
 import com.example.petstore.Entities.Director;
+import lombok.Data;
 
 import java.util.UUID;
-
+@Data
 public class PetStoreCreateModel {
-    public String Name;
-    public int Rating;
-    public UUID DirectorId;
+    private String Name;
+    private int Rating;
+    private UUID DirectorId;
 }

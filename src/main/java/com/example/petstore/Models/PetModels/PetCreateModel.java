@@ -2,13 +2,14 @@ package com.example.petstore.Models.PetModels;
 
 import com.example.petstore.Entities.PetStore;
 import com.example.petstore.Entities.Species;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.UUID;
-
+@Data
 public class PetCreateModel {
-    public LocalDate DateOfBirth;
-    public double Price;
-    public UUID SpeciesId;
-    public UUID PetStoreId;
+    private LocalDate DateOfBirth;
+    private double Price;
+    private UUID SpeciesId;
+    private UUID PetStoreId;
 }

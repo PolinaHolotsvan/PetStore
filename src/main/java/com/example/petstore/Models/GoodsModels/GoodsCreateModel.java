@@ -1,7 +1,10 @@
 package com.example.petstore.Models.GoodsModels;
 
+import lombok.Data;
+
+@Data
 public class GoodsCreateModel {
-    public String Name;
-    public String Category;
-    public double Price;
+    private String Name;
+    private String Category;
+    private double Price;
 }

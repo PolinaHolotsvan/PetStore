@@ -33,7 +33,7 @@ public class PetStoreController {
         em.getTransaction().begin();
 
         PetStore petStore = modelMapper.map(model, PetStore.class);
-        Director director = em.find(Director.class, model.DirectorId);
+        Director director = em.find(Director.class, model.getDirectorId());
         petStore.setDirector(director);
 
         em.persist(petStore);
@@ -72,7 +72,7 @@ public class PetStoreController {
         em.getTransaction().begin();
 
         PetStore petStore = em.find(PetStore.class, id);
-        Director director = em.find(Director.class, petStore.Director.getId());
+        Director director = em.find(Director.class, petStore.getDirector().getId());
         petStore.removeDirector(director);
 
         em.remove(petStore);
@@ -85,7 +85,7 @@ public class PetStoreController {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
-        PetStore petStore = em.find(PetStore.class, model.Id);
+        PetStore petStore = em.find(PetStore.class, model.getId());
         petStore = modelMapper.map(model, PetStore.class);
 
         em.merge(petStore);

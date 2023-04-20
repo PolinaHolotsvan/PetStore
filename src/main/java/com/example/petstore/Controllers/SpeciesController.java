@@ -42,7 +42,7 @@ public class SpeciesController {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
-        Species species = em.find(Species.class, model.Id);
+        Species species = em.find(Species.class, model.getId());
         species = modelMapper.map(model, Species.class);
 
         em.merge(species);

@@ -1,31 +1,22 @@
 package com.example.petstore.Entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Data
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public UUID Id;
-    public LocalDate DateOfBirth;
-    public double Price;
+    private UUID Id;
+    private LocalDate DateOfBirth;
+    private double Price;
     @ManyToOne
-    public Species Species;
+    private Species Species;
 
     @ManyToOne
-    public PetStore PetStore;
-
-    public Pet(UUID id, Species species, LocalDate dateOfBirth, double price, PetStore petStore) {
-        Id = id;
-        Species = species;
-        DateOfBirth = dateOfBirth;
-        Price = price;
-        PetStore = petStore;
-    }
-
-    public Pet() {
-    }
+    private PetStore PetStore;
 }
