@@ -9,7 +9,6 @@ import java.util.UUID;
 @Data
 public class Manager {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID Id;
     private String Name;
     private Sex Gender;

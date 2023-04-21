@@ -55,6 +55,7 @@ public class SpeciesController {
         em.getTransaction().begin();
 
         Species species = modelMapper.map(model, Species.class);
+        species.setId(UUID.randomUUID());
 
         em.persist(species);
         em.getTransaction().commit();
@@ -69,6 +70,7 @@ public class SpeciesController {
 
         for (Species species1 : species) {
             SpeciesViewModel model = modelMapper.map(species1, SpeciesViewModel.class);
+            model.convertPets(species1.getPets());
             models.add(model);
         }
 
@@ -81,6 +83,7 @@ public class SpeciesController {
 
         Species species = em.find(Species.class, id);
         SpeciesViewModel model = modelMapper.map(species, SpeciesViewModel.class);
+        model.convertPets(species.getPets());
 
         return model;
     }

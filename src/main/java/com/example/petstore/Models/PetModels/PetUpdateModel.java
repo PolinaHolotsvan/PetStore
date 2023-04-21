@@ -4,6 +4,6 @@ import lombok.Data;
 
 import java.util.UUID;
 @Data
-public class PetUpdateModel extends PetCreateModel{
+public class PetUpdateModel extends PetBasicModel{
     private UUID Id;
 }

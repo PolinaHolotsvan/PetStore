@@ -9,7 +9,6 @@ import java.util.*;
 @Data
 public class PetStore {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID Id;
     private String Name;
     private int Rating;
@@ -34,7 +33,7 @@ public class PetStore {
     private List<Manager> Managers=new ArrayList<>();
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "DirectorId", referencedColumnName = "Id")
     private Director Director;
 

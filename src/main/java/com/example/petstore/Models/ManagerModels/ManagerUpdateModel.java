@@ -1,7 +1,9 @@
 package com.example.petstore.Models.ManagerModels;
 
-import java.util.UUID;
+import lombok.Data;
 
-public class ManagerUpdateModel extends ManagerCreateModel{
-    public UUID Id;
+import java.util.UUID;
+@Data
+public class ManagerUpdateModel extends ManagerBasicModel{
+    private UUID Id;
 }

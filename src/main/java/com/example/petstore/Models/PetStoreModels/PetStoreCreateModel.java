@@ -5,8 +5,6 @@ import lombok.Data;
 
 import java.util.UUID;
 @Data
-public class PetStoreCreateModel {
-    private String Name;
-    private int Rating;
+public class PetStoreCreateModel extends PetStoreBasicModel{
     private UUID DirectorId;
 }

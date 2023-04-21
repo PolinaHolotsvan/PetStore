@@ -37,12 +37,12 @@ public class PetController {
         PetStore petStore = em.find(PetStore.class, pet.getPetStore().getId());
         petStore.removePet(pet);
 
-        Species species = em.find(Species.class, pet.getSpecies().getName());
+        Species species = em.find(Species.class, pet.getSpecies().getId());
         species.removePet(pet);
 
         em.remove(pet);
-        em.persist(species);
-        em.persist(petStore);
+        em.merge(species);
+        em.merge(petStore);
         em.getTransaction().commit();
     }
 
@@ -52,7 +52,14 @@ public class PetController {
         em.getTransaction().begin();
 
         Pet pet = em.find(Pet.class, model.getId());
+
+        PetStore petStore = pet.getPetStore();
+        Species species = pet.getSpecies();
+
         pet = modelMapper.map(model, Pet.class);
+
+        pet.setPetStore(petStore);
+        pet.setSpecies(species);
 
         em.merge(pet);
         em.getTransaction().commit();
@@ -64,6 +71,7 @@ public class PetController {
         em.getTransaction().begin();
 
         Pet pet = modelMapper.map(model, Pet.class);
+        pet.setId(UUID.randomUUID());
 
         PetStore petStore = em.find(PetStore.class, model.getPetStoreId());
         petStore.addPet(pet);
@@ -71,7 +79,6 @@ public class PetController {
         Species species = em.find(Species.class, model.getSpeciesId());
         species.addPet(pet);
 
-        pet.setId(UUID.randomUUID());
 
         em.persist(pet);
         em.merge(petStore);
@@ -88,6 +95,10 @@ public class PetController {
 
         for (Pet pet : pets) {
             PetViewModel model = modelMapper.map(pet, PetViewModel.class);
+
+            model.convertSpecies(pet.getSpecies());
+            model.convertPetStore(pet.getPetStore());
+
             models.add(model);
         }
 
@@ -100,6 +111,9 @@ public class PetController {
 
         Pet pet = em.find(Pet.class, id);
         PetViewModel model = modelMapper.map(pet, PetViewModel.class);
+
+        model.convertSpecies(pet.getSpecies());
+        model.convertPetStore(pet.getPetStore());
 
         return model;
     }

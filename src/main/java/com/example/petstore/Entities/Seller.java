@@ -11,7 +11,6 @@ import java.util.UUID;
 @Data
 public class Seller {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID Id;
     private String Name;
     private Sex Gender;

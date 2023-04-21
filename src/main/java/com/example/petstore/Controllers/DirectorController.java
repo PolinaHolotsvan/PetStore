@@ -1,7 +1,6 @@
 package com.example.petstore.Controllers;
 
 import com.example.petstore.Entities.Director;
-import com.example.petstore.Entities.PetStore;
 import com.example.petstore.Models.DirectorModels.DirectorCreateModel;
 import com.example.petstore.Models.DirectorModels.DirectorUpdateModel;
 import com.example.petstore.Models.DirectorModels.DirectorViewModel;
@@ -56,6 +55,7 @@ public class DirectorController {
         em.getTransaction().begin();
 
         Director director = modelMapper.map(model, Director.class);
+        director.setId(UUID.randomUUID());
 
         em.persist(director);
         em.getTransaction().commit();
@@ -70,6 +70,8 @@ public class DirectorController {
 
         for (Director director : directors) {
             DirectorViewModel model = modelMapper.map(director, DirectorViewModel.class);
+            if(director.getPetStore()!=null)
+                model.convertPetStore(director.getPetStore());
             models.add(model);
         }
 
@@ -82,6 +84,8 @@ public class DirectorController {
 
         Director director = em.find(Director.class, id);
         DirectorViewModel model = modelMapper.map(director, DirectorViewModel.class);
+        if(director.getPetStore()!=null)
+            model.convertPetStore(director.getPetStore());
 
         return model;
     }

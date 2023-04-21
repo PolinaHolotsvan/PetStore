@@ -1,9 +1,11 @@
 package com.example.petstore.Models.ManagerModels;
 
+import com.example.petstore.Entities.PetStore;
 import com.example.petstore.Entities.Sex;
+import lombok.Data;
 
-public class ManagerCreateModel {
-    public String Name;
-    public Sex Gender;
-    public double Salary;
+import java.util.UUID;
+@Data
+public class ManagerCreateModel extends ManagerBasicModel{
+    private UUID PetStoreId;
 }

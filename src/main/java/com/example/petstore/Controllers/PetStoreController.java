@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class PetStoreController {
         em.getTransaction().begin();
 
         PetStore petStore = modelMapper.map(model, PetStore.class);
+        petStore.setId(UUID.randomUUID());
+
         Director director = em.find(Director.class, model.getDirectorId());
         petStore.setDirector(director);
 
@@ -49,6 +52,13 @@ public class PetStoreController {
 
         for (PetStore petStore : petStores) {
             PetStoreViewModel model = modelMapper.map(petStore, PetStoreViewModel.class);
+
+            model.convertPets(petStore.getPets());
+            model.convertGoods(petStore.getGoods());
+            model.convertManagers(petStore.getManagers());
+            model.convertSellers(petStore.getSellers());
+            model.convertDirector(petStore.getDirector());
+
             models.add(model);
         }
 
@@ -61,6 +71,12 @@ public class PetStoreController {
 
         PetStore petStore = em.find(PetStore.class, id);
         PetStoreViewModel model = modelMapper.map(petStore, PetStoreViewModel.class);
+
+        model.convertPets(petStore.getPets());
+        model.convertGoods(petStore.getGoods());
+        model.convertManagers(petStore.getManagers());
+        model.convertSellers(petStore.getSellers());
+        model.convertDirector(petStore.getDirector());
 
         return model;
     }
@@ -85,7 +101,9 @@ public class PetStoreController {
         em.getTransaction().begin();
 
         PetStore petStore = em.find(PetStore.class, model.getId());
+        Director director = petStore.getDirector();
         petStore = modelMapper.map(model, PetStore.class);
+        petStore.setDirector(director);
 
         em.merge(petStore);
         em.getTransaction().commit();

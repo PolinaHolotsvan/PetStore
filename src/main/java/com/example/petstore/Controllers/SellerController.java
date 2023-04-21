@@ -1,10 +1,18 @@
 package com.example.petstore.Controllers;
 
+import com.example.petstore.Entities.*;
+import com.example.petstore.Models.SellerModels.SellerCreateModel;
+import com.example.petstore.Models.SellerModels.SellerUpdateModel;
+import com.example.petstore.Models.SellerModels.SellerViewModel;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/seller")
@@ -17,13 +25,98 @@ public class SellerController {
     public SellerController(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
-    public void delete(){}
 
-    public void update(){}
+    @DeleteMapping("/delete")
+    public void delete(@RequestParam UUID id){
+        EntityManager em=entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
 
-    public void create(){}
+        Seller seller=em.find(Seller.class, id);
+        for (PetStore petStore : seller.getPetStores()) {
+            petStore.removeSellerFromPetStore(seller);
+            em.merge(petStore);
+        }
 
-    public void getAll(){}
+        em.remove(seller);
+        em.getTransaction().commit();
+    }
 
-    public void getById(){}
+    @PutMapping("/update")
+    public void update(@RequestBody SellerUpdateModel model){
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+
+        Seller seller = em.find(Seller.class, model.getId());
+        seller = modelMapper.map(model, Seller.class);
+
+        em.merge(seller);
+        em.getTransaction().commit();
+    }
+
+    @PostMapping("/create")
+    public void create(@RequestBody SellerCreateModel model){
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+
+        Seller seller = modelMapper.map(model, Seller.class);
+        seller.setId(UUID.randomUUID());
+
+        em.persist(seller);
+        em.getTransaction().commit();
+    }
+
+    @GetMapping("/getAll")
+    public List<SellerViewModel> getAll(){
+        EntityManager em = entityManagerFactory.createEntityManager();
+
+        List<Seller> sellers = em.createQuery("from Seller").getResultList();
+        List<SellerViewModel> models = new ArrayList<>();
+
+        for (Seller seller : sellers) {
+            SellerViewModel model = modelMapper.map(seller, SellerViewModel.class);
+            model.convertPets(seller.getPetStores());
+            models.add(model);
+        }
+
+        return models;
+    }
+
+    @GetMapping("/getById")
+    public SellerViewModel getById(@RequestParam UUID id){
+        EntityManager em = entityManagerFactory.createEntityManager();
+
+        Seller seller = em.find(Seller.class, id);
+        SellerViewModel model = modelMapper.map(seller, SellerViewModel.class);
+        model.convertPets(seller.getPetStores());
+
+        return model;
+    }
+
+    @DeleteMapping("/removeSellerFromPetStore")
+    public void removeSellerFromPetStore(@RequestParam UUID petStoreId, @RequestParam UUID sellerId){
+        EntityManager em=entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+
+        Seller seller=em.find(Seller.class, sellerId);
+        PetStore petStore =em.find(PetStore.class, petStoreId);
+        petStore.removeSellerFromPetStore(seller);
+
+        em.merge(seller);
+        em.merge(petStore);
+        em.getTransaction().commit();
+    }
+
+    @PostMapping("/assignSellerToPetStore")
+    public void assignSellerToPetStore(@RequestParam UUID petStoreId, @RequestParam UUID sellerId){
+        EntityManager em=entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+
+        PetStore petStore=em.find(PetStore.class, petStoreId);
+        Seller seller=em.find(Seller.class, sellerId);
+        petStore.assignSellerToPetStore(seller);
+
+        em.merge(seller);
+        em.merge(petStore);
+        em.getTransaction().commit();
+    }
 }
