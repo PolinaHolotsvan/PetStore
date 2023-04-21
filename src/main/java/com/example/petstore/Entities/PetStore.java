@@ -21,7 +21,7 @@ public class PetStore {
     @JoinTable(name = "EmploymentContract",
             joinColumns = { @JoinColumn(name = "PetStoreId") },
             inverseJoinColumns = { @JoinColumn(name = "SellerId") })
-    private Set<Seller> Sellers = new HashSet<>();
+    private List<Seller> Sellers = new ArrayList<>();
 
     @OneToMany(mappedBy = "PetStore", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Goods> Goods=new ArrayList<>();

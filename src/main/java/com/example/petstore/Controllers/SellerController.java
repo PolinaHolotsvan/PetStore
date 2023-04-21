@@ -32,7 +32,9 @@ public class SellerController {
         em.getTransaction().begin();
 
         Seller seller=em.find(Seller.class, id);
-        for (PetStore petStore : seller.getPetStores()) {
+
+        for (int i=0; i<seller.getPetStores().size(); i++) {
+            PetStore petStore = seller.getPetStores().get(i);
             petStore.removeSellerFromPetStore(seller);
             em.merge(petStore);
         }

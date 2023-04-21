@@ -13,7 +13,7 @@ public class PetStoreViewModel extends PetStoreUpdateModel{
     private List<UUID> PetsId=new ArrayList<>();
     private List<UUID> ManagersId=new ArrayList<>();
 
-    public void convertSellers(Set<Seller> sellers){
+    public void convertSellers(List<Seller> sellers){
         for (Seller seller:sellers) {
             SellersId.add(seller.getId());
         }

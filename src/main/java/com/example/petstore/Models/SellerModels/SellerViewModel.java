@@ -13,7 +13,7 @@ import java.util.UUID;
 public class SellerViewModel extends SellerUpdateModel{
     private Set<UUID> PetStoresId=new HashSet<>();
 
-    public void convertPets(Set<PetStore> petStores){
+    public void convertPets(List<PetStore> petStores){
         for (PetStore petStore:petStores) {
             PetStoresId.add(petStore.getId());
         }
