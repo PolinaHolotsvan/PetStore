@@ -1,7 +1,6 @@
 package com.example.petstore.Controllers;
 
-import com.example.petstore.Entities.Director;
-import com.example.petstore.Entities.PetStore;
+import com.example.petstore.Entities.*;
 import com.example.petstore.Models.PetStoreModels.PetStoreCreateModel;
 import com.example.petstore.Models.PetStoreModels.PetStoreUpdateModel;
 import com.example.petstore.Models.PetStoreModels.PetStoreViewModel;
@@ -101,9 +100,20 @@ public class PetStoreController {
         em.getTransaction().begin();
 
         PetStore petStore = em.find(PetStore.class, model.getId());
+
         Director director = petStore.getDirector();
+        List<Seller> sellers=petStore.getSellers();
+        List<Pet> pets=petStore.getPets();
+        List<Goods> goods=petStore.getGoods();
+        List<Manager> managers=petStore.getManagers();
+
         petStore = modelMapper.map(model, PetStore.class);
+
         petStore.setDirector(director);
+        petStore.setSellers(sellers);
+        petStore.setManagers(managers);
+        petStore.setPets(pets);
+        petStore.setGoods(goods);
 
         em.merge(petStore);
         em.getTransaction().commit();

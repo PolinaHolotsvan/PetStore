@@ -1,5 +1,6 @@
 package com.example.petstore.Controllers;
 
+import com.example.petstore.Entities.Pet;
 import com.example.petstore.Entities.Species;
 import com.example.petstore.Models.SpeciesModels.SpeciesCreateModel;
 import com.example.petstore.Models.SpeciesModels.SpeciesUpdateModel;
@@ -43,7 +44,10 @@ public class SpeciesController {
         em.getTransaction().begin();
 
         Species species = em.find(Species.class, model.getId());
+        List<Pet> pets=species.getPets();
+
         species = modelMapper.map(model, Species.class);
+        species.setPets(pets);
 
         em.merge(species);
         em.getTransaction().commit();

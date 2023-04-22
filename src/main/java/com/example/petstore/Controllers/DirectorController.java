@@ -1,6 +1,7 @@
 package com.example.petstore.Controllers;
 
 import com.example.petstore.Entities.Director;
+import com.example.petstore.Entities.PetStore;
 import com.example.petstore.Models.DirectorModels.DirectorCreateModel;
 import com.example.petstore.Models.DirectorModels.DirectorUpdateModel;
 import com.example.petstore.Models.DirectorModels.DirectorViewModel;
@@ -43,7 +44,9 @@ public class DirectorController {
         em.getTransaction().begin();
 
         Director director = em.find(Director.class, model.getId());
+        PetStore petStore=director.getPetStore();
         director = modelMapper.map(model, Director.class);
+        director.setPetStore(petStore);
 
         em.merge(director);
         em.getTransaction().commit();

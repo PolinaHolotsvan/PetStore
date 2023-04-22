@@ -49,7 +49,10 @@ public class SellerController {
         em.getTransaction().begin();
 
         Seller seller = em.find(Seller.class, model.getId());
+        List<PetStore> petStores=seller.getPetStores();
+
         seller = modelMapper.map(model, Seller.class);
+        seller.setPetStores(petStores);
 
         em.merge(seller);
         em.getTransaction().commit();
