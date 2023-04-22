@@ -19,10 +19,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/pet")
 public class PetController {
+    private final ModelMapper modelMapper;
     @PersistenceUnit(name = "Entities")
     private EntityManagerFactory entityManagerFactory;
-
-    private final ModelMapper modelMapper;
 
     public PetController(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;

@@ -11,8 +11,8 @@ import java.util.UUID;
 public class SpeciesViewModel extends SpeciesUpdateModel{
     private List<UUID> PetsId=new ArrayList<>();
 
-    public void convertPets(List<Pet> pets){
-        for (Pet pet:pets) {
+    public void convertPets(List<Pet> pets) {
+        for (Pet pet : pets) {
             PetsId.add(pet.getId());
         }
     }

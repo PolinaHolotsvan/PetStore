@@ -8,7 +8,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,10 +17,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/petStore")
 public class PetStoreController {
+    private final ModelMapper modelMapper;
     @PersistenceUnit(name = "Entities")
     private EntityManagerFactory entityManagerFactory;
-
-    private final ModelMapper modelMapper;
 
     public PetStoreController(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
@@ -102,10 +100,10 @@ public class PetStoreController {
         PetStore petStore = em.find(PetStore.class, model.getId());
 
         Director director = petStore.getDirector();
-        List<Seller> sellers=petStore.getSellers();
-        List<Pet> pets=petStore.getPets();
-        List<Goods> goods=petStore.getGoods();
-        List<Manager> managers=petStore.getManagers();
+        List<Seller> sellers = petStore.getSellers();
+        List<Pet> pets = petStore.getPets();
+        List<Goods> goods = petStore.getGoods();
+        List<Manager> managers = petStore.getManagers();
 
         petStore = modelMapper.map(model, PetStore.class);
 

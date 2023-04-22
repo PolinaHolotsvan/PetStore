@@ -1,6 +1,7 @@
 package com.example.petstore.Controllers;
 
-import com.example.petstore.Entities.*;
+import com.example.petstore.Entities.PetStore;
+import com.example.petstore.Entities.Seller;
 import com.example.petstore.Models.SellerModels.SellerCreateModel;
 import com.example.petstore.Models.SellerModels.SellerUpdateModel;
 import com.example.petstore.Models.SellerModels.SellerViewModel;
@@ -17,23 +18,22 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/seller")
 public class SellerController {
+    private final ModelMapper modelMapper;
     @PersistenceUnit(name = "Entities")
     private EntityManagerFactory entityManagerFactory;
-
-    private final ModelMapper modelMapper;
 
     public SellerController(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestParam UUID id){
-        EntityManager em=entityManagerFactory.createEntityManager();
+    public void delete(@RequestParam UUID id) {
+        EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
-        Seller seller=em.find(Seller.class, id);
+        Seller seller = em.find(Seller.class, id);
 
-        for (int i=0; i<seller.getPetStores().size(); i++) {
+        for (int i = 0; i < seller.getPetStores().size(); i++) {
             PetStore petStore = seller.getPetStores().get(i);
             petStore.removeSellerFromPetStore(seller);
             em.merge(petStore);
@@ -44,12 +44,12 @@ public class SellerController {
     }
 
     @PutMapping("/update")
-    public void update(@RequestBody SellerUpdateModel model){
+    public void update(@RequestBody SellerUpdateModel model) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
         Seller seller = em.find(Seller.class, model.getId());
-        List<PetStore> petStores=seller.getPetStores();
+        List<PetStore> petStores = seller.getPetStores();
 
         seller = modelMapper.map(model, Seller.class);
         seller.setPetStores(petStores);
@@ -59,7 +59,7 @@ public class SellerController {
     }
 
     @PostMapping("/create")
-    public void create(@RequestBody SellerCreateModel model){
+    public void create(@RequestBody SellerCreateModel model) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
@@ -71,7 +71,7 @@ public class SellerController {
     }
 
     @GetMapping("/getAll")
-    public List<SellerViewModel> getAll(){
+    public List<SellerViewModel> getAll() {
         EntityManager em = entityManagerFactory.createEntityManager();
 
         List<Seller> sellers = em.createQuery("from Seller").getResultList();
@@ -87,7 +87,7 @@ public class SellerController {
     }
 
     @GetMapping("/getById")
-    public SellerViewModel getById(@RequestParam UUID id){
+    public SellerViewModel getById(@RequestParam UUID id) {
         EntityManager em = entityManagerFactory.createEntityManager();
 
         Seller seller = em.find(Seller.class, id);
@@ -98,12 +98,12 @@ public class SellerController {
     }
 
     @DeleteMapping("/removeSellerFromPetStore")
-    public void removeSellerFromPetStore(@RequestParam UUID petStoreId, @RequestParam UUID sellerId){
-        EntityManager em=entityManagerFactory.createEntityManager();
+    public void removeSellerFromPetStore(@RequestParam UUID petStoreId, @RequestParam UUID sellerId) {
+        EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
-        Seller seller=em.find(Seller.class, sellerId);
-        PetStore petStore =em.find(PetStore.class, petStoreId);
+        Seller seller = em.find(Seller.class, sellerId);
+        PetStore petStore = em.find(PetStore.class, petStoreId);
         petStore.removeSellerFromPetStore(seller);
 
         em.merge(seller);
@@ -112,12 +112,12 @@ public class SellerController {
     }
 
     @PostMapping("/assignSellerToPetStore")
-    public void assignSellerToPetStore(@RequestParam UUID petStoreId, @RequestParam UUID sellerId){
-        EntityManager em=entityManagerFactory.createEntityManager();
+    public void assignSellerToPetStore(@RequestParam UUID petStoreId, @RequestParam UUID sellerId) {
+        EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
-        PetStore petStore=em.find(PetStore.class, petStoreId);
-        Seller seller=em.find(Seller.class, sellerId);
+        PetStore petStore = em.find(PetStore.class, petStoreId);
+        Seller seller = em.find(Seller.class, sellerId);
         petStore.assignSellerToPetStore(seller);
 
         em.merge(seller);

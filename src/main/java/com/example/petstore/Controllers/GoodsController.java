@@ -29,7 +29,7 @@ public class GoodsController {
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestParam UUID id){
+    public void delete(@RequestParam UUID id) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
@@ -43,12 +43,12 @@ public class GoodsController {
     }
 
     @PutMapping("/update")
-    public void update(@RequestBody GoodsUpdateModel model){
+    public void update(@RequestBody GoodsUpdateModel model) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
         Goods goods = em.find(Goods.class, model.getId());
-        PetStore petStore=goods.getPetStore();
+        PetStore petStore = goods.getPetStore();
         goods = modelMapper.map(model, Goods.class);
         goods.setPetStore(petStore);
 
@@ -57,7 +57,7 @@ public class GoodsController {
     }
 
     @PostMapping("/create")
-    public void create(@RequestBody GoodsCreateModel model){
+    public void create(@RequestBody GoodsCreateModel model) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
@@ -72,7 +72,7 @@ public class GoodsController {
     }
 
     @GetMapping("/getAll")
-    public List<GoodsViewModel> getAll(){
+    public List<GoodsViewModel> getAll() {
         EntityManager em = entityManagerFactory.createEntityManager();
 
         List<Goods> goods = em.createQuery("from Goods").getResultList();
@@ -88,7 +88,7 @@ public class GoodsController {
     }
 
     @GetMapping("/getById")
-    public GoodsViewModel getById(@RequestParam UUID id){
+    public GoodsViewModel getById(@RequestParam UUID id) {
         EntityManager em = entityManagerFactory.createEntityManager();
 
         Goods goods = em.find(Goods.class, id);

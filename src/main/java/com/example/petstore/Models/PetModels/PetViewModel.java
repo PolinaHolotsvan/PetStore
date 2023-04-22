@@ -14,7 +14,8 @@ public class PetViewModel extends PetUpdateModel{
     public void convertSpecies(Species species){
         SpeciesId=species.getId();
     }
-    public void convertPetStore(PetStore petStore){
-        PetStoreId=petStore.getId();
+
+    public void convertPetStore(PetStore petStore) {
+        PetStoreId = petStore.getId();
     }
 }

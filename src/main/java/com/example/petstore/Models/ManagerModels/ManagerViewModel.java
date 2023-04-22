@@ -6,9 +6,10 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class ManagerViewModel extends ManagerUpdateModel{
+public class ManagerViewModel extends ManagerUpdateModel {
     private UUID PetStoreId;
-    public void convertPetStore(PetStore petStore){
-        PetStoreId=petStore.getId();
+
+    public void convertPetStore(PetStore petStore) {
+        PetStoreId = petStore.getId();
     }
 }

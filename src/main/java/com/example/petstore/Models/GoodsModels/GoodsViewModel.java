@@ -8,7 +8,8 @@ import java.util.UUID;
 @Data
 public class GoodsViewModel extends GoodsUpdateModel{
     private UUID PetStoreId;
-    public void convertPetStore(PetStore petStore){
-        PetStoreId=petStore.getId();
+
+    public void convertPetStore(PetStore petStore) {
+        PetStoreId = petStore.getId();
     }
 }

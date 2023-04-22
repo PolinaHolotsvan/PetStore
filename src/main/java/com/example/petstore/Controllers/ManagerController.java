@@ -18,16 +18,16 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/manager")
 public class ManagerController {
+    private final ModelMapper modelMapper;
     @PersistenceUnit(name = "Entities")
     private EntityManagerFactory entityManagerFactory;
-
-    private final ModelMapper modelMapper;
 
     public ManagerController(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
+
     @DeleteMapping("/delete")
-    public void delete(@RequestParam UUID id){
+    public void delete(@RequestParam UUID id) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
@@ -41,7 +41,7 @@ public class ManagerController {
     }
 
     @PutMapping("/update")
-    public void update(@RequestBody ManagerUpdateModel model){
+    public void update(@RequestBody ManagerUpdateModel model) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
@@ -55,11 +55,11 @@ public class ManagerController {
     }
 
     @PostMapping("/create")
-    public void create(@RequestBody ManagerCreateModel model){
+    public void create(@RequestBody ManagerCreateModel model) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
-        Manager manager = modelMapper.map(model,Manager.class);
+        Manager manager = modelMapper.map(model, Manager.class);
         manager.setId(UUID.randomUUID());
 
         PetStore petStore = em.find(PetStore.class, model.getPetStoreId());
@@ -70,7 +70,7 @@ public class ManagerController {
     }
 
     @GetMapping("/getAll")
-    public List<ManagerViewModel> getAll(){
+    public List<ManagerViewModel> getAll() {
         EntityManager em = entityManagerFactory.createEntityManager();
 
         List<Manager> managers = em.createQuery("from Manager ").getResultList();
@@ -86,7 +86,7 @@ public class ManagerController {
     }
 
     @GetMapping("/getById")
-    public ManagerViewModel getById(@RequestParam UUID id){
+    public ManagerViewModel getById(@RequestParam UUID id) {
         EntityManager em = entityManagerFactory.createEntityManager();
 
         Manager manager = em.find(Manager.class, id);

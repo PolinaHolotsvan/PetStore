@@ -44,7 +44,7 @@ public class DirectorController {
         em.getTransaction().begin();
 
         Director director = em.find(Director.class, model.getId());
-        PetStore petStore=director.getPetStore();
+        PetStore petStore = director.getPetStore();
         director = modelMapper.map(model, Director.class);
         director.setPetStore(petStore);
 
@@ -73,7 +73,7 @@ public class DirectorController {
 
         for (Director director : directors) {
             DirectorViewModel model = modelMapper.map(director, DirectorViewModel.class);
-            if(director.getPetStore()!=null)
+            if (director.getPetStore() != null)
                 model.convertPetStore(director.getPetStore());
             models.add(model);
         }
@@ -87,7 +87,7 @@ public class DirectorController {
 
         Director director = em.find(Director.class, id);
         DirectorViewModel model = modelMapper.map(director, DirectorViewModel.class);
-        if(director.getPetStore()!=null)
+        if (director.getPetStore() != null)
             model.convertPetStore(director.getPetStore());
 
         return model;

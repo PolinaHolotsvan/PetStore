@@ -18,10 +18,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/species")
 public class SpeciesController {
+    private final ModelMapper modelMapper;
     @PersistenceUnit(name = "Entities")
     private EntityManagerFactory entityManagerFactory;
-
-    private final ModelMapper modelMapper;
 
     public SpeciesController(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
@@ -44,7 +43,7 @@ public class SpeciesController {
         em.getTransaction().begin();
 
         Species species = em.find(Species.class, model.getId());
-        List<Pet> pets=species.getPets();
+        List<Pet> pets = species.getPets();
 
         species = modelMapper.map(model, Species.class);
         species.setPets(pets);
