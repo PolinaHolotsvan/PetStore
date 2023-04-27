@@ -1,7 +1,6 @@
 package com.example.petstore.Controllers;
 
 import com.example.petstore.Entities.Goods;
-import com.example.petstore.Entities.Pet;
 import com.example.petstore.Entities.PetStore;
 import com.example.petstore.Models.GoodsModels.GoodsCreateModel;
 import com.example.petstore.Models.GoodsModels.GoodsUpdateModel;

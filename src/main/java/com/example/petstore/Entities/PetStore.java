@@ -2,16 +2,19 @@ package com.example.petstore.Entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class PetStore {
     @Id
     private UUID Id;
     private String Name;
-    private int Rating;
+    private double Rating;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST,
@@ -33,7 +36,7 @@ public class PetStore {
     private List<Manager> Managers=new ArrayList<>();
 
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "DirectorId", referencedColumnName = "Id")
     private Director Director;
 

@@ -7,6 +7,7 @@
         <class>com.example.petstore.Entities.Pet</class>
         <class>com.example.petstore.Entities.PetStore</class>
         <class>com.example.petstore.Entities.Seller</class>
+        <class>com.example.petstore.Entities.Species</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>

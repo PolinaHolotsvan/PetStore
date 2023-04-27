@@ -1,9 +1,12 @@
 package com.example.petstore.Models.PetStoreModels;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class PetStoreBasicModel {
     private String Name;
-    private int Rating;
+    private double Rating;
 }

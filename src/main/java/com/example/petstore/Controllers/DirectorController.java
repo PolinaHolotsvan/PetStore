@@ -1,84 +1,71 @@
 package com.example.petstore.Controllers;
 
 import com.example.petstore.Entities.Director;
-import com.example.petstore.Entities.PetStore;
 import com.example.petstore.Models.DirectorModels.DirectorCreateModel;
 import com.example.petstore.Models.DirectorModels.DirectorUpdateModel;
 import com.example.petstore.Models.DirectorModels.DirectorViewModel;
+import com.example.petstore.Services.DirectorService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/director")
 public class DirectorController {
     @PersistenceUnit(name = "Entities")
     private EntityManagerFactory entityManagerFactory;
 
     private final ModelMapper modelMapper;
+    private final DirectorService directorService;
 
-    public DirectorController(ModelMapper modelMapper) {
+    public DirectorController(ModelMapper modelMapper, DirectorService directorService) {
         this.modelMapper = modelMapper;
+        this.directorService = directorService;
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestParam UUID id) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-
-        Director director = em.find(Director.class, id);
-
-        em.remove(director);
-        em.getTransaction().commit();
+    public String delete(@RequestParam UUID id) {
+        directorService.delete(id);
+        return "redirect:/director/getAll";
     }
 
-    @PutMapping("/update")
-    public void update(@RequestBody DirectorUpdateModel model) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-
-        Director director = em.find(Director.class, model.getId());
-        PetStore petStore = director.getPetStore();
-        director = modelMapper.map(model, Director.class);
-        director.setPetStore(petStore);
-
-        em.merge(director);
-        em.getTransaction().commit();
+    @PostMapping("/update")
+    public String update(@ModelAttribute DirectorUpdateModel model) {
+        directorService.update(model);
+        return "redirect:/director/getAll";
     }
 
     @PostMapping("/create")
-    public void create(@RequestBody DirectorCreateModel model) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-
-        Director director = modelMapper.map(model, Director.class);
-        director.setId(UUID.randomUUID());
-
-        em.persist(director);
-        em.getTransaction().commit();
+    public String create(@ModelAttribute DirectorCreateModel model) {
+        directorService.create(model);
+        return "redirect:/director/getAll";
     }
 
+    @GetMapping("/showAddForm")
+    public String showAddForm(Model page){
+        page.addAttribute("director", new DirectorCreateModel());
+        return "DirectorPages/DirectorCreatePage";
+    }
+
+    @GetMapping("/showUpdateForm")
+    public String showUpdateForm(Model page, @RequestParam UUID id){
+        DirectorViewModel model=new DirectorViewModel();
+        model.setId(id);
+        page.addAttribute("director", model);
+        return "DirectorPages/DirectorUpdatePage";
+    }
+
+
     @GetMapping("/getAll")
-    public List<DirectorViewModel> getAll() {
-        EntityManager em = entityManagerFactory.createEntityManager();
-
-        List<Director> directors = em.createQuery("from Director").getResultList();
-        List<DirectorViewModel> models = new ArrayList<>();
-
-        for (Director director : directors) {
-            DirectorViewModel model = modelMapper.map(director, DirectorViewModel.class);
-            if (director.getPetStore() != null)
-                model.convertPetStore(director.getPetStore());
-            models.add(model);
-        }
-
-        return models;
+    public String getAll(Model page) {
+        page.addAttribute("directors", directorService.getAll());
+        return "DirectorPages/DirectorViewPage";
     }
 
     @GetMapping("/getById")

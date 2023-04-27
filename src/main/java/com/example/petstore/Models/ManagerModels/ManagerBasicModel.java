@@ -2,8 +2,11 @@ package com.example.petstore.Models.ManagerModels;
 
 import com.example.petstore.Entities.Sex;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ManagerBasicModel {
     private String Name;
     private Sex Gender;

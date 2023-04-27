@@ -2,13 +2,16 @@ package com.example.petstore.Models.SellerModels;
 
 import com.example.petstore.Entities.PetStore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 public class SellerViewModel extends SellerUpdateModel {
     private Set<UUID> PetStoresId = new HashSet<>();
 

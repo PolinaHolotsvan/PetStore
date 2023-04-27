@@ -2,10 +2,13 @@ package com.example.petstore.Models.PetStoreModels;
 
 import com.example.petstore.Entities.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 
-@Data
+@Getter
+@Setter
 public class PetStoreViewModel extends PetStoreUpdateModel {
     private UUID DirectorId;
     private Set<UUID> SellersId = new HashSet<>();

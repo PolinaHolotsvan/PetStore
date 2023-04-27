@@ -13,7 +13,7 @@ services:
     networks:
       - back
 
-  api:
+  api2:
     build: '.'
     restart: always
     environment:
@@ -32,6 +32,6 @@ networks:
   back:
 volumes:
   db:
-  api:
+  api2:
 
 
