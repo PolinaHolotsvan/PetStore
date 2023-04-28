@@ -18,18 +18,13 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/director")
 public class DirectorController {
-    @PersistenceUnit(name = "Entities")
-    private EntityManagerFactory entityManagerFactory;
-
-    private final ModelMapper modelMapper;
     private final DirectorService directorService;
 
-    public DirectorController(ModelMapper modelMapper, DirectorService directorService) {
-        this.modelMapper = modelMapper;
+    public DirectorController(DirectorService directorService) {
         this.directorService = directorService;
     }
 
-    @DeleteMapping("/delete")
+    @GetMapping("/delete")
     public String delete(@RequestParam UUID id) {
         directorService.delete(id);
         return "redirect:/director/getAll";
@@ -68,7 +63,7 @@ public class DirectorController {
         return "DirectorPages/DirectorViewPage";
     }
 
-    @GetMapping("/getById")
+    /*@GetMapping("/getById")
     public DirectorViewModel getById(@RequestParam UUID id) {
         EntityManager em = entityManagerFactory.createEntityManager();
 
@@ -78,5 +73,5 @@ public class DirectorController {
             model.convertPetStore(director.getPetStore());
 
         return model;
-    }
+    }*/
 }

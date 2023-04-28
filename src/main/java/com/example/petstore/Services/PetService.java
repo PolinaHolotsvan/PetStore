@@ -1,37 +1,34 @@
-package com.example.petstore.Controllers;
+package com.example.petstore.Services;
 
 import com.example.petstore.Entities.Pet;
 import com.example.petstore.Entities.PetStore;
 import com.example.petstore.Entities.Species;
 import com.example.petstore.Models.PetModels.PetCreateModel;
 import com.example.petstore.Models.PetModels.PetUpdateModel;
-import com.example.petstore.Services.PetService;
+import com.example.petstore.Models.PetModels.PetViewModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-@Controller
-@RequestMapping("/pet")
-public class PetController {
+@Service
+public class PetService {
     private final ModelMapper modelMapper;
     @PersistenceUnit(name = "Entities")
     private EntityManagerFactory entityManagerFactory;
 
-    private final PetService petService;
-
-    public PetController(ModelMapper modelMapper, PetService petService) {
+    public PetService(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
-        this.petService = petService;
     }
 
-    @DeleteMapping("/delete")
-    public void delete(@RequestParam UUID id) {
+    public void delete(UUID id) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
@@ -48,8 +45,7 @@ public class PetController {
         em.getTransaction().commit();
     }
 
-    @PutMapping("/update")
-    public void update(@RequestBody PetUpdateModel model) {
+    public void update(PetUpdateModel model) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
@@ -65,10 +61,10 @@ public class PetController {
 
         em.merge(pet);
         em.getTransaction().commit();
+        em.close();
     }
 
-    @PostMapping("/create")
-    public void create(@RequestBody PetCreateModel model) {
+    public void create(PetCreateModel model) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
 
@@ -86,25 +82,25 @@ public class PetController {
         em.merge(petStore);
         em.merge(species);
         em.getTransaction().commit();
+        em.close();
     }
 
-    @GetMapping("/getAll")
-    public String getAll(Model page) {
-        page.addAttribute("pets", petService.getAll());
-        return "PetPages/PetViewPage";
-    }
-
-    /*@GetMapping("/getById")
-    public PetViewModel getById(@RequestParam UUID id) {
+    public List<PetViewModel> getAll() {
         EntityManager em = entityManagerFactory.createEntityManager();
 
-        Pet pet = em.find(Pet.class, id);
-        PetViewModel model = modelMapper.map(pet, PetViewModel.class);
+        List<Pet> pets = em.createQuery("from Pet").getResultList();
+        List<PetViewModel> models = new ArrayList<>();
 
-        model.convertSpecies(pet.getSpecies());
-        model.convertPetStore(pet.getPetStore());
+        for (Pet pet : pets) {
+            PetViewModel model = modelMapper.map(pet, PetViewModel.class);
 
-        return model;
-    }*/
+            model.convertSpecies(pet.getSpecies());
+            model.convertPetStore(pet.getPetStore());
 
+            models.add(model);
+        }
+        em.close();
+
+        return models;
+    }
 }
