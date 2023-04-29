@@ -17,8 +17,7 @@ public class PetStore {
     private double Rating;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
+            CascadeType.ALL
     })
 
     @JoinTable(name = "EmploymentContract",
@@ -26,13 +25,19 @@ public class PetStore {
             inverseJoinColumns = { @JoinColumn(name = "SellerId") })
     private List<Seller> Sellers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "PetStore", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "PetStore", cascade = {
+            CascadeType.ALL
+    }, orphanRemoval = true)
     private List<Goods> Goods=new ArrayList<>();
 
-    @OneToMany(mappedBy = "PetStore", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "PetStore", cascade = {
+            CascadeType.ALL
+    }, orphanRemoval = true)
     private List<Pet> Pets=new ArrayList<>();
 
-    @OneToMany(mappedBy = "PetStore", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "PetStore", cascade = {
+            CascadeType.ALL
+    }, orphanRemoval = true)
     private List<Manager> Managers=new ArrayList<>();
 
 

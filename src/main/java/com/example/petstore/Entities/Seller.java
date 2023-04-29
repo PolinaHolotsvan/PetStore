@@ -18,8 +18,7 @@ public class Seller {
     private double Salary;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = {
-        CascadeType.PERSIST,
-                CascadeType.MERGE
+                CascadeType.ALL
     }, mappedBy = "Sellers")
     private List<PetStore> PetStores=new ArrayList<>();
 }

@@ -18,7 +18,9 @@ public class Species {
     private String Name;
     private String Description;
 
-    @OneToMany(mappedBy = "Species", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "Species", cascade = {
+            CascadeType.ALL
+    }, orphanRemoval = true)
     private List<Pet> Pets=new ArrayList<>();
 
     public void addPet(Pet pet) {
