@@ -10,9 +10,9 @@ import java.util.UUID;
 @Getter
 @Setter
 public class ManagerViewModel extends ManagerUpdateModel {
-    private UUID PetStoreId;
+    private String PetStoreId;
 
     public void convertPetStore(PetStore petStore) {
-        PetStoreId = petStore.getId();
+        PetStoreId = petStore.getName();
     }
 }

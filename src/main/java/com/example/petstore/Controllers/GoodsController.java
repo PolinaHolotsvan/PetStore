@@ -54,7 +54,7 @@ public class GoodsController {
     @GetMapping("/delete")
     public String delete(@RequestParam UUID id) {
         goodsService.delete(id);
-        return "redirect:/petStore/getAll";
+        return "redirect:/goods/getAll";
     }
 
     @GetMapping("/showAddForm")

@@ -11,14 +11,14 @@ import java.util.UUID;
 @Getter
 @Setter
 public class PetViewModel extends PetUpdateModel{
-    private UUID SpeciesId;
-    private UUID PetStoreId;
+    private String SpeciesId;
+    private String  PetStoreId;
 
     public void convertSpecies(Species species){
-        SpeciesId=species.getId();
+        SpeciesId=species.getName();
     }
 
     public void convertPetStore(PetStore petStore) {
-        PetStoreId = petStore.getId();
+        PetStoreId = petStore.getName();
     }
 }

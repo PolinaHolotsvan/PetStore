@@ -10,21 +10,21 @@ import java.util.*;
 @Getter
 @Setter
 public class PetStoreViewModel extends PetStoreUpdateModel {
-    private UUID DirectorId;
-    private Set<UUID> SellersId = new HashSet<>();
-    private List<UUID> GoodsId = new ArrayList<>();
+    private String DirectorId;
+    private Set<String> SellersId = new HashSet<>();
+    private List<String> GoodsId = new ArrayList<>();
     private List<UUID> PetsId = new ArrayList<>();
-    private List<UUID> ManagersId = new ArrayList<>();
+    private List<String> ManagersId = new ArrayList<>();
 
     public void convertSellers(List<Seller> sellers) {
         for (Seller seller : sellers) {
-            SellersId.add(seller.getId());
+            SellersId.add(seller.getName());
         }
     }
 
     public void convertGoods(List<Goods> goods) {
         for (Goods goods1 : goods) {
-            GoodsId.add(goods1.getId());
+            GoodsId.add(goods1.getName());
         }
     }
 
@@ -36,12 +36,12 @@ public class PetStoreViewModel extends PetStoreUpdateModel {
 
     public void convertManagers(List<Manager> managers) {
         for (Manager manager : managers) {
-            ManagersId.add(manager.getId());
+            ManagersId.add(manager.getName());
         }
     }
 
     public void convertDirector(Director director) {
-        DirectorId = director.getId();
+        DirectorId = director.getName();
     }
 
 }
