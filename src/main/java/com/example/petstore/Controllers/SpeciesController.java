@@ -24,13 +24,13 @@ public class SpeciesController {
         this.speciesService = speciesService;
     }
 
-    @DeleteMapping("/delete")
+    @GetMapping("/delete")
     public String delete(@RequestParam UUID id) {
         speciesService.delete(id);
         return "redirect:/species/getAll";
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public String update(@ModelAttribute SpeciesUpdateModel model) {
         speciesService.update(model);
         return "redirect:/species/getAll";
@@ -44,7 +44,7 @@ public class SpeciesController {
 
     @GetMapping("/showAddForm")
     public String showAddForm(Model page){
-        page.addAttribute("species", new DirectorCreateModel());
+        page.addAttribute("species", new SpeciesCreateModel());
         return "SpeciesPages/SpeciesCreatePage";
     }
 
@@ -59,7 +59,7 @@ public class SpeciesController {
 
     @GetMapping("/getAll")
     public String getAll(Model page) {
-        page.addAttribute("directors", speciesService.getAll());
+        page.addAttribute("species", speciesService.getAll());
         return "SpeciesPages/SpeciesViewPage";
     }
 

@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Species list</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-<body>
+<body style="background-color:#EBDCB2">
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#B38867">
 
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav" style="font-size: large">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Director<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/goods/getAll}">Goods</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/manager/getAll}">Manager</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/pet/getAll}">Pet</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/petStore/getAll}">PetStore</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/seller/getAll}">Seller</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/species/getAll}">Species</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <h2> Species list</h2>
+    </hr>
+    <a th:href="@{/species/showAddForm}" class="btn btn-primary">Add species</a>
+    <a th:href="@{/addDirectorFormddd}" class="btn btn-primary">Download data</a>
+    <br/><br/>
+    <table class="table table-bordered table-striped" id="employeeTable" style="background-color:#DDBC95">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>PetsId</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="species1: ${species}">
+            <td th:text ="${species1.Id}"></td>
+            <td th:text ="${species1.Name}"></td>
+            <td th:text ="${species1.Description}"></td>
+            <td th:text ="${species1.PetsId}"></td>
+            <td>
+                <a th:href="@{/species/showUpdateForm(id=${species1.Id})}" class="btn btn-info" style="align-self: center">Update</a>
+                <a th:href="@{/species/delete(id=${species1.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
