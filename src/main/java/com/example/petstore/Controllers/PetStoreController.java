@@ -1,68 +1,41 @@
 package com.example.petstore.Controllers;
 
-import com.example.petstore.Entities.*;
+import com.example.petstore.Entities.PetStore;
+import com.example.petstore.Models.DirectorModels.DirectorUpdateModel;
 import com.example.petstore.Models.PetStoreModels.PetStoreCreateModel;
 import com.example.petstore.Models.PetStoreModels.PetStoreUpdateModel;
-import com.example.petstore.Models.PetStoreModels.PetStoreViewModel;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.PersistenceUnit;
-import org.modelmapper.ModelMapper;
+import com.example.petstore.Services.DirectorService;
+import com.example.petstore.Services.PetStoreService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/petStore")
 public class PetStoreController {
-    private final ModelMapper modelMapper;
-    @PersistenceUnit(name = "Entities")
-    private EntityManagerFactory entityManagerFactory;
+    private final PetStoreService petStoreService;
+    private final DirectorService directorService;
 
-    public PetStoreController(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
+    public PetStoreController(PetStoreService petStoreService, DirectorService directorService) {
+        this.petStoreService = petStoreService;
+        this.directorService = directorService;
     }
 
     @PostMapping("/create")
-    public void create(@RequestBody PetStoreCreateModel model) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-
-        PetStore petStore = modelMapper.map(model, PetStore.class);
-        petStore.setId(UUID.randomUUID());
-
-        Director director = em.find(Director.class, model.getDirectorId());
-        petStore.setDirector(director);
-
-        em.merge(director);
-        em.getTransaction().commit();
+    public String create(@ModelAttribute PetStoreCreateModel model) {
+        petStoreService.create(model);
+        return "redirect:/petStore/getAll";
     }
 
     @GetMapping("/getAll")
-    public List<PetStoreViewModel> getAll() {
-        EntityManager em = entityManagerFactory.createEntityManager();
-
-        List<PetStore> petStores = em.createQuery("from PetStore").getResultList();
-        List<PetStoreViewModel> models = new ArrayList<>();
-
-        for (PetStore petStore : petStores) {
-            PetStoreViewModel model = modelMapper.map(petStore, PetStoreViewModel.class);
-
-            model.convertPets(petStore.getPets());
-            model.convertGoods(petStore.getGoods());
-            model.convertManagers(petStore.getManagers());
-            model.convertSellers(petStore.getSellers());
-            model.convertDirector(petStore.getDirector());
-
-            models.add(model);
-        }
-
-        return models;
+    public String getAll(Model page) {
+        page.addAttribute("petStores", petStoreService.getAll());
+        return "PetStorePages/PetStoreViewPage";
     }
 
-    @GetMapping("/getById")
+    /*@GetMapping("/getById")
     public PetStoreViewModel getById(@RequestParam UUID id) {
         EntityManager em = entityManagerFactory.createEntityManager();
 
@@ -76,44 +49,32 @@ public class PetStoreController {
         model.convertDirector(petStore.getDirector());
 
         return model;
+    }*/
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam UUID id) {
+        petStoreService.delete(id);
+        return "redirect:/petStore/getAll";
     }
 
-    @DeleteMapping("/delete")
-    public void delete(@RequestParam UUID id) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-
-        PetStore petStore = em.find(PetStore.class, id);
-        Director director = em.find(Director.class, petStore.getDirector().getId());
-        petStore.removeDirector(director);
-
-        em.remove(petStore);
-        em.merge(director);
-        em.getTransaction().commit();
+    @GetMapping("/showAddForm")
+    public String showAddForm(Model page){
+        page.addAttribute("petStore", new PetStoreCreateModel());
+        page.addAttribute("directors", directorService.getAllFree());
+        return "PetStorePages/PetStoreCreatePage";
     }
 
-    @PutMapping("/update")
-    public void update(@RequestBody PetStoreUpdateModel model) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
+    @GetMapping("/showUpdateForm")
+    public String showUpdateForm(Model page, @RequestParam UUID id){
+        PetStoreUpdateModel model=new PetStoreUpdateModel();
+        model.setId(id);
+        page.addAttribute("petStore", model);
+        return "PetStorePages/PetStoreUpdatePage";
+    }
 
-        PetStore petStore = em.find(PetStore.class, model.getId());
-
-        Director director = petStore.getDirector();
-        List<Seller> sellers = petStore.getSellers();
-        List<Pet> pets = petStore.getPets();
-        List<Goods> goods = petStore.getGoods();
-        List<Manager> managers = petStore.getManagers();
-
-        petStore = modelMapper.map(model, PetStore.class);
-
-        petStore.setDirector(director);
-        petStore.setSellers(sellers);
-        petStore.setManagers(managers);
-        petStore.setPets(pets);
-        petStore.setGoods(goods);
-
-        em.merge(petStore);
-        em.getTransaction().commit();
+    @PostMapping("/update")
+    public String update(@ModelAttribute PetStoreUpdateModel model) {
+        petStoreService.update(model);
+        return "redirect:/petStore/getAll";
     }
 }

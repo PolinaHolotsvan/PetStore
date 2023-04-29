@@ -1,15 +1,10 @@
 package com.example.petstore.Controllers;
 
-import com.example.petstore.Entities.Pet;
-import com.example.petstore.Entities.PetStore;
-import com.example.petstore.Entities.Species;
 import com.example.petstore.Models.PetModels.PetCreateModel;
 import com.example.petstore.Models.PetModels.PetUpdateModel;
 import com.example.petstore.Services.PetService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.PersistenceUnit;
-import org.modelmapper.ModelMapper;
+import com.example.petstore.Services.PetStoreService;
+import com.example.petstore.Services.SpeciesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,73 +14,48 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/pet")
 public class PetController {
-    private final ModelMapper modelMapper;
-    @PersistenceUnit(name = "Entities")
-    private EntityManagerFactory entityManagerFactory;
-
     private final PetService petService;
+    private final PetStoreService petStoreService;
+    private final SpeciesService speciesService;
 
-    public PetController(ModelMapper modelMapper, PetService petService) {
-        this.modelMapper = modelMapper;
+    public PetController(PetService petService, PetStoreService petStoreService, SpeciesService speciesService) {
         this.petService = petService;
+        this.petStoreService = petStoreService;
+        this.speciesService = speciesService;
     }
 
-    @DeleteMapping("/delete")
-    public void delete(@RequestParam UUID id) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-
-        Pet pet = em.find(Pet.class, id);
-        PetStore petStore = em.find(PetStore.class, pet.getPetStore().getId());
-        petStore.removePet(pet);
-
-        Species species = em.find(Species.class, pet.getSpecies().getId());
-        species.removePet(pet);
-
-        em.remove(pet);
-        em.merge(species);
-        em.merge(petStore);
-        em.getTransaction().commit();
+    @GetMapping("/delete")
+    public String delete(@RequestParam UUID id) {
+        petService.delete(id);
+        return "redirect:/pet/getAll";
     }
 
-    @PutMapping("/update")
-    public void update(@RequestBody PetUpdateModel model) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-
-        Pet pet = em.find(Pet.class, model.getId());
-
-        PetStore petStore = pet.getPetStore();
-        Species species = pet.getSpecies();
-
-        pet = modelMapper.map(model, Pet.class);
-
-        pet.setPetStore(petStore);
-        pet.setSpecies(species);
-
-        em.merge(pet);
-        em.getTransaction().commit();
+    @PostMapping("/update")
+    public String update(@ModelAttribute PetUpdateModel model) {
+        petService.update(model);
+        return "redirect:/pet/getAll";
     }
 
     @PostMapping("/create")
-    public void create(@RequestBody PetCreateModel model) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
+    public String create(@ModelAttribute PetCreateModel model) {
+        petService.create(model);
+        return "redirect:/pet/getAll";
+    }
 
-        Pet pet = modelMapper.map(model, Pet.class);
-        pet.setId(UUID.randomUUID());
+    @GetMapping("/showAddForm")
+    public String showAddForm(Model page){
+        page.addAttribute("pet", new PetCreateModel());
+        page.addAttribute("petStores", petStoreService.getAll());
+        page.addAttribute("species", speciesService.getAll());
+        return "PetPages/PetCreatePage";
+    }
 
-        PetStore petStore = em.find(PetStore.class, model.getPetStoreId());
-        petStore.addPet(pet);
-
-        Species species = em.find(Species.class, model.getSpeciesId());
-        species.addPet(pet);
-
-
-        em.persist(pet);
-        em.merge(petStore);
-        em.merge(species);
-        em.getTransaction().commit();
+    @GetMapping("/showUpdateForm")
+    public String showUpdateForm(Model page, @RequestParam UUID id){
+        PetUpdateModel model=new PetUpdateModel();
+        model.setId(id);
+        page.addAttribute("pet", model);
+        return "PetPages/PetUpdatePage";
     }
 
     @GetMapping("/getAll")

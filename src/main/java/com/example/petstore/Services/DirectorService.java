@@ -42,6 +42,21 @@ public class DirectorService {
         return models;
     }
 
+    public List<DirectorViewModel> getAllFree(){
+        EntityManager em = entityManagerFactory.createEntityManager();
+
+        List<Director> directors = em.createQuery("from Director").getResultList();
+        List<DirectorViewModel> models = new ArrayList<>();
+
+        for (Director director : directors) {
+            DirectorViewModel model = modelMapper.map(director, DirectorViewModel.class);
+            if (director.getPetStore() == null)
+                models.add(model);
+        }
+        em.close();
+        return models;
+    }
+
     public DirectorViewModel getById(UUID id) {
         EntityManager em = entityManagerFactory.createEntityManager();
 

@@ -1,14 +1,8 @@
 package com.example.petstore.Controllers;
 
-import com.example.petstore.Entities.Director;
 import com.example.petstore.Models.DirectorModels.DirectorCreateModel;
 import com.example.petstore.Models.DirectorModels.DirectorUpdateModel;
-import com.example.petstore.Models.DirectorModels.DirectorViewModel;
 import com.example.petstore.Services.DirectorService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.PersistenceUnit;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +44,7 @@ public class DirectorController {
 
     @GetMapping("/showUpdateForm")
     public String showUpdateForm(Model page, @RequestParam UUID id){
-        DirectorViewModel model=new DirectorViewModel();
+        DirectorUpdateModel model=new DirectorUpdateModel();
         model.setId(id);
         page.addAttribute("director", model);
         return "DirectorPages/DirectorUpdatePage";

@@ -40,7 +40,7 @@
   </nav>
   <h2> Pet list</h2>
   </hr>
-  <a th:href="@{/pet/showAddForm}" class="btn btn-primary">Add Director</a>
+  <a th:href="@{/pet/showAddForm}" class="btn btn-primary">Add Pet</a>
   <a th:href="@{/addDirectorFormddd}" class="btn btn-primary">Download data</a>
   <br/><br/>
   <table class="table table-bordered table-striped" id="employeeTable" style="background-color:#DDBC95">
@@ -48,6 +48,7 @@
     <tr>
       <th>Id</th>
       <th>Date of birth</th>
+      <th>Price</th>
       <th>Species</th>
       <th>PetStore</th>
 
@@ -57,6 +58,7 @@
     <tr th:each="pet: ${pets}">
       <td th:text ="${pet.Id}"></td>
       <td th:text ="${pet.DateOfBirth}"></td>
+      <td th:text ="${pet.Price}"></td>
       <td th:text ="${pet.SpeciesId}"></td>
       <td th:text ="${pet.PetStoreId}"></td>
       <td>
