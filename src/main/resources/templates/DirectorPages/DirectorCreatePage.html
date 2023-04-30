@@ -47,18 +47,24 @@
     <h3>Add New Director</h3>
     <hr/>
 
-    <form th:action="@{/director/create}" th:object="${director}" method="POST">
+    <form th:action="@{/director/create}" th:object="${directorCreateModel}" method="POST">
 
-        <input type="text" th:field="${director.Name}" class="form-control col-4 mb-4" style="width: 50%" placeholder="Enter Name" />
+        <input type="text" th:field="*{name}" class="form-control col-4 mb-4" style="width: 50%" placeholder="Enter Name" />
+        <ul>
+            <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error" />
+        </ul>
 
 
-        <select class="form-select" th:field="${director.Gender}" style="width: 50%">
+        <select class="form-select" th:field="*{gender}" style="width: 50%">
             <option th:value="Male">Male</option>
             <option th:value="Female">Female</option>
             <option th:value="Nonbinary">Nonbinary</option>
         </select>
 
-        <input type="number" th:field="${director.Salary}" class="form-control col-4 mb-4" placeholder="Enter Salary" />
+        <input type="number" th:field="*{salary}" class="form-control col-4 mb-4" placeholder="Enter Salary" />
+        <ul>
+            <li th:each="err : ${#fields.errors('salary')}" th:text="${err}" class="error" />
+        </ul>
 
         <button type="submit" class="btn btn-primary col-2">Save</button>
 

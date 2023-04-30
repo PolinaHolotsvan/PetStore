@@ -3,10 +3,15 @@ package com.example.petstore.Controllers;
 import com.example.petstore.Models.DirectorModels.DirectorCreateModel;
 import com.example.petstore.Models.DirectorModels.DirectorUpdateModel;
 import com.example.petstore.Services.DirectorService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Controller
@@ -31,14 +36,17 @@ public class DirectorController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute DirectorCreateModel model) {
-        directorService.create(model);
+    public String create(@ModelAttribute @Valid DirectorCreateModel directorCreateModel, BindingResult result) {
+        if(result.hasErrors()){
+            return "DirectorPages/DirectorCreatePage";
+        }
+        directorService.create(directorCreateModel);
         return "redirect:/director/getAll";
     }
 
     @GetMapping("/showAddForm")
     public String showAddForm(Model page){
-        page.addAttribute("director", new DirectorCreateModel());
+        page.addAttribute("directorCreateModel",  new @Valid DirectorCreateModel());
         return "DirectorPages/DirectorCreatePage";
     }
 

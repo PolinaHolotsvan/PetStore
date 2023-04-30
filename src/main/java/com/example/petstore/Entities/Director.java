@@ -1,6 +1,10 @@
 package com.example.petstore.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +17,10 @@ import java.util.UUID;
 public class Director {
     @Id
     private UUID Id;
+
     private String Name;
     private Sex Gender;
+
     private double Salary;
 
     @OneToOne(mappedBy = "Director", cascade = {

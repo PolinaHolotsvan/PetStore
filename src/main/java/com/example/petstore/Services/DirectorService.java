@@ -8,6 +8,7 @@ import com.example.petstore.Models.DirectorModels.DirectorViewModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -72,7 +73,6 @@ public class DirectorService {
     public void create(DirectorCreateModel model) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-
         Director director = modelMapper.map(model, Director.class);
         director.setId(UUID.randomUUID());
 
