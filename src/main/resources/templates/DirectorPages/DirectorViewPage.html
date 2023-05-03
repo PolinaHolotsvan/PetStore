@@ -55,14 +55,14 @@
         </thead>
         <tbody>
         <tr th:each="director: ${directors}">
-            <td th:text ="${director.Id}"></td>
-            <td th:text ="${director.Name}"></td>
-            <td th:text ="${director.Gender}"></td>
-            <td th:text ="${director.Salary}"></td>
-            <td th:text ="${director.PetStoreId}"></td>
+            <td th:text ="${director.id}"></td>
+            <td th:text ="${director.name}"></td>
+            <td th:text ="${director.gender}"></td>
+            <td th:text ="${director.salary}"></td>
+            <td th:text ="${director.petStoreName}"></td>
             <td>
-                <a th:href="@{/director/showUpdateForm(id=${director.Id})}" class="btn btn-info" style="align-self: center">Update</a>
-                <a th:href="@{/director/delete(id=${director.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
+                <a th:href="@{/director/showUpdateForm(id=${director.id})}" class="btn btn-info" style="align-self: center">Update</a>
+                <a th:href="@{/director/delete(id=${director.id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
             </td>
         </tr>
         </tbody>

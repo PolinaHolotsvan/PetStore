@@ -60,7 +60,7 @@
             <td th:text ="${manager.Name}"></td>
             <td th:text ="${manager.Gender}"></td>
             <td th:text ="${manager.Salary}"></td>
-            <td th:text ="${manager.PetStoreId}"></td>
+            <td th:text ="${manager.petStoreName}"></td>
             <td>
                 <a th:href="@{/manager/showUpdateForm(id=${manager.Id})}" class="btn btn-info" style="align-self: center">Update</a>
                 <a th:href="@{/manager/delete(id=${manager.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>

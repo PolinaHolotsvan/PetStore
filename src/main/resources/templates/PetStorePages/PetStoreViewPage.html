@@ -62,14 +62,14 @@
             <td th:text ="${petStore.Id}"></td>
             <td th:text ="${petStore.Name}"></td>
             <td th:text ="${petStore.Rating}"></td>
-            <td th:text ="${petStore.DirectorId}"></td>
-            <td th:text ="${petStore.GoodsId}"></td>
-            <td th:text ="${petStore.ManagersId}"></td>
-            <td th:text ="${petStore.SellersId}"></td>
-            <td th:text ="${#lists.size(petStore.PetsId)}"></td>
+            <td th:text ="${petStore.directorName}"></td>
+            <td th:text ="${petStore.goodNames}"></td>
+            <td th:text ="${petStore.managerNames}"></td>
+            <td th:text ="${petStore.sellerNames}"></td>
+            <td th:text ="${#lists.size(petStore.petIds)}"></td>
             <td>
-                <a th:href="@{/petStore/showUpdateForm(id=${petStore.Id})}" class="btn btn-info" style="align-self: center">Update</a>
-                <a th:href="@{/petStore/delete(id=${petStore.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
+                <a th:href="@{/petStore/showUpdateForm(id=${petStore.id})}" class="btn btn-info" style="align-self: center">Update</a>
+                <a th:href="@{/petStore/delete(id=${petStore.id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
             </td>
         </tr>
         </tbody>

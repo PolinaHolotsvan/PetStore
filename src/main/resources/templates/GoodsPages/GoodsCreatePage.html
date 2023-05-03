@@ -60,7 +60,7 @@
 
 
         <select class="form-select" th:field="${goods.petStoreId}" style="width: 50%">
-            <option th:each="petStore: ${petStores}" th:value="${petStore.Id}" th:text="${petStore.Name}"></option>
+            <option th:each="petStore: ${petStores}" th:value="${petStore.Id}" th:text="${petStore.name}"></option>
         </select>
 
 

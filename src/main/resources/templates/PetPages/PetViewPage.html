@@ -59,8 +59,8 @@
       <td th:text ="${pet.Id}"></td>
       <td th:text ="${pet.DateOfBirth}"></td>
       <td th:text ="${pet.Price}"></td>
-      <td th:text ="${pet.SpeciesId}"></td>
-      <td th:text ="${pet.PetStoreId}"></td>
+      <td th:text ="${pet.speciesName}"></td>
+      <td th:text ="${pet.petStoreName}"></td>
       <td>
         <a th:href="@{/pet/showUpdateForm(id=${pet.Id})}" class="btn btn-info" style="align-self: center">Update</a>
         <a th:href="@{/pet/delete(id=${pet.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
