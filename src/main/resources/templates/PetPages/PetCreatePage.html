@@ -50,18 +50,25 @@
 
     <form th:action="@{/pet/create}" th:object="${pet}" method="POST">
 
-        <input type="date" th:field="${pet.DateOfBirth}" class="form-control col-4 mb-4" style="width: 50%"
+        <input type="date" th:field="${pet.dateOfBirth}" class="form-control col-4 mb-4" style="width: 50%"
                placeholder="Enter date of birth"/>
+        <ul>
+            <li th:each="err : ${#fields.errors('dateOfBirth')}" th:text="${err}" class="error" />
+        </ul>
 
-        <input type="number" th:field="${pet.Price}" class="form-control col-4 mb-4" placeholder="Enter price" />
+        <input type="number" th:field="${pet.price}" class="form-control col-4 mb-4" placeholder="Enter price" />
+
+        <ul>
+            <li th:each="err : ${#fields.errors('price')}" th:text="${err}" class="error" />
+        </ul>
 
 
         <select class="form-select" th:field="${pet.petStoreId}" style="width: 50%">
-            <option th:each="petStore: ${petStores}" th:value="${petStore.Id}" th:text="${petStore.Name}"></option>
+            <option th:each="petStore: ${petStores}" th:value="${petStore.id}" th:text="${petStore.name}"></option>
         </select>
 
-        <select class="form-select" th:field="${pet.SpeciesId}" style="width: 50%">
-            <option th:each="species1: ${species}" th:value="${species1.Id}" th:text="${species1.Name}"></option>
+        <select class="form-select" th:field="${pet.speciesId}" style="width: 50%">
+            <option th:each="species1: ${species}" th:value="${species1.id}" th:text="${species1.name}"></option>
         </select>
 
 

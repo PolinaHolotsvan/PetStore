@@ -4,8 +4,11 @@ import com.example.petstore.models.petStoreModels.PetStoreCreateModel;
 import com.example.petstore.models.petStoreModels.PetStoreUpdateModel;
 import com.example.petstore.services.DirectorService;
 import com.example.petstore.services.PetStoreService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -22,7 +25,15 @@ public class PetStoreController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute PetStoreCreateModel model) {
+    public String create(@ModelAttribute("petStore") @Valid PetStoreCreateModel model, BindingResult result) {
+        String err = petStoreService.isUnique(model.getName());
+        if (!err.isEmpty()) {
+            var error = new FieldError("model", "name", err);
+            result.addError(error);
+        }
+        if(result.hasErrors()){
+            return "PetStorePages/PetStoreCreatePage";
+        }
         petStoreService.create(model);
         return "redirect:/petStore/getAll";
     }
@@ -55,7 +66,15 @@ public class PetStoreController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute PetStoreUpdateModel model) {
+    public String update(@ModelAttribute("petStore") @Valid PetStoreUpdateModel model, BindingResult result) {
+        String err = petStoreService.isUnique2(model.getName(), model.getId());
+        if (!err.isEmpty()) {
+            var error = new FieldError("model", "name", err);
+            result.addError(error);
+        }
+        if(result.hasErrors()){
+            return "PetStorePages/PetStoreUpdatePage";
+        }
         petStoreService.update(model);
         return "redirect:/petStore/getAll";
     }

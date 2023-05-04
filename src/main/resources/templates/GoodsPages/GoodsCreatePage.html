@@ -8,7 +8,7 @@
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
           crossorigin="anonymous"/>
 </head>
-<body>
+<body style="background-color:#EBDCB2">
 
 <div class="container" style="alignment: center">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#B38867">
@@ -49,12 +49,13 @@
     <hr/>
 
     <form th:action="@{/goods/create}" th:object="${goods}" method="POST">
-
-        <input type="text" th:field="${goods.name}" class="form-control col-4 mb-4" style="width: 50%"
-               placeholder="Enter name"/>
+        <h4>Enter name</h4>
+        <input type="text" th:field="${goods.name}" class="form-control col-4 mb-4" style="width: 50%"/>
         <ul>
             <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error" />
         </ul>
+
+        <h4>Enter category</h4>
 
         <input type="text" th:field="${goods.category}" class="form-control col-4 mb-4" style="width: 50%"
                placeholder="Enter category"/>
@@ -62,16 +63,19 @@
             <li th:each="err : ${#fields.errors('category')}" th:text="${err}" class="error" />
         </ul>
 
-        <input type="number" th:field="${goods.price}" class="form-control col-4 mb-4" placeholder="Enter price" />
+        <h4>Enter price</h4>
+
+        <input type="number" th:field="${goods.price}" class="form-control col-4 mb-4" style="width: 50%" placeholder="Enter price" />
         <ul>
             <li th:each="err : ${#fields.errors('price')}" th:text="${err}" class="error" />
         </ul>
 
-        <select class="form-select" th:field="${goods.petStoreId}" style="width: 50%">
+        <h4>Choose pet store</h4>
+
+        <select class="form-select" th:field="${goods.petStoreId}">
             <option th:each="petStore: ${petStores}" th:value="${petStore.id}" th:text="${petStore.name}"></option>
         </select>
-
-
+        <h6></h6>
         <button type="submit" class="btn btn-primary col-2">Save</button>
 
     </form>

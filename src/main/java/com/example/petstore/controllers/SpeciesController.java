@@ -3,8 +3,11 @@ package com.example.petstore.controllers;
 import com.example.petstore.models.speciesModels.SpeciesCreateModel;
 import com.example.petstore.models.speciesModels.SpeciesUpdateModel;
 import com.example.petstore.services.SpeciesService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -25,13 +28,29 @@ public class SpeciesController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute SpeciesUpdateModel model) {
+    public String update(@ModelAttribute("species") @Valid SpeciesUpdateModel model, BindingResult result) {
+        String err = speciesService.isUnique2(model.getName(), model.getId());
+        if (!err.isEmpty()) {
+            var error = new FieldError("model", "name", err);
+            result.addError(error);
+        }
+        if(result.hasErrors()){
+            return "SpeciesPages/SpeciesUpdatePage";
+        }
         speciesService.update(model);
         return "redirect:/species/getAll";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute SpeciesCreateModel model) {
+    public String create(@ModelAttribute("species") @Valid SpeciesCreateModel model, BindingResult result) {
+        String err = speciesService.isUnique(model.getName());
+        if (!err.isEmpty()) {
+            var error = new FieldError("model", "name", err);
+            result.addError(error);
+        }
+        if(result.hasErrors()){
+            return "SpeciesPages/SpeciesUpdatePage";
+        }
         speciesService.create(model);
         return "redirect:/species/getAll";
     }

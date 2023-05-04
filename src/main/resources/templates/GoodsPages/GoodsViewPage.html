@@ -38,10 +38,9 @@
             </ul>
         </div>
     </nav>
-    <h2> Pet list</h2>
+    <h2> Goods list</h2>
     </hr>
-    <a th:href="@{/goods/showAddForm}" class="btn btn-primary">Add goods</a>
-    <a th:href="@{/addDirectorFormddd}" class="btn btn-primary">Download data</a>
+    <a th:href="@{/goods/showAddForm}" class="btn btn-primary" style="background-color:#7DCEA0">Add goods</a>
     <br/><br/>
     <table class="table table-bordered table-striped" id="employeeTable" style="background-color:#DDBC95">
         <thead>
@@ -62,8 +61,8 @@
             <td th:text ="${goods1.Price}"></td>
             <td th:text ="${goods1.petStoreName}"></td>
             <td>
-                <a th:href="@{/goods/showUpdateForm(id=${goods1.Id})}" class="btn btn-info" style="align-self: center">Update</a>
-                <a th:href="@{/goods/delete(id=${goods1.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
+                <a th:href="@{/goods/showUpdateForm(id=${goods1.Id})}" class="btn btn-info" style="align-self: center; background-color:#F4D03F">Update</a>
+                <a th:href="@{/goods/delete(id=${goods1.Id})}" class="btn btn-danger ml-2" style="background-color:#EC7063">Delete</a>
             </td>
         </tr>
         </tbody>

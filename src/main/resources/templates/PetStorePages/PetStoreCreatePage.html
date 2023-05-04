@@ -50,14 +50,20 @@
 
     <form th:action="@{/petStore/create}" th:object="${petStore}" method="POST">
 
-        <input type="text" th:field="${petStore.Name}" class="form-control col-4 mb-4" style="width: 50%"
+        <input type="text" th:field="${petStore.name}" class="form-control col-4 mb-4" style="width: 50%"
                placeholder="Enter date of birth"/>
+        <ul>
+            <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error" />
+        </ul>
 
-        <input type="number" th:field="${petStore.Rating}" class="form-control col-4 mb-4" placeholder="Enter rating" />
+        <input type="number" th:field="${petStore.rating}" class="form-control col-4 mb-4" placeholder="Enter rating" />
+        <ul>
+            <li th:each="err : ${#fields.errors('rating')}" th:text="${err}" class="error" />
+        </ul>
 
 
         <select class="form-select" th:field="${petStore.directorId}" style="width: 50%">
-            <option th:each="director: ${directors}" th:value="${director.Id}" th:text="${director.Name}"></option>
+            <option th:each="director: ${directors}" th:value="${director.id}" th:text="${director.name}"></option>
         </select>
 
 

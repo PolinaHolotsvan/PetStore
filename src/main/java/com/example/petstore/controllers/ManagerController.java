@@ -26,13 +26,14 @@ public class ManagerController {
 
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("manager") @Valid ManagerCreateModel model, BindingResult result) {
+    public String create(@ModelAttribute("manager") @Valid ManagerCreateModel model, BindingResult result, Model page) {
         String err = managerService.isUnique(model.getName());
         if (!err.isEmpty()) {
             var error = new FieldError("model", "name", err);
             result.addError(error);
         }
         if(result.hasErrors()){
+            page.addAttribute("petStores", petStoreService.getAll());
             return "ManagerPages/ManagerCreatePage";
         }
         managerService.create(model);
@@ -68,7 +69,7 @@ public class ManagerController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute("manager") @Valid ManagerUpdateModel model, BindingResult result) {
-        String err = managerService.isUnique(model.getName());
+        String err = managerService.isUnique2(model.getName(), model.getId());
         if (!err.isEmpty()) {
             var error = new FieldError("model", "name", err);
             result.addError(error);

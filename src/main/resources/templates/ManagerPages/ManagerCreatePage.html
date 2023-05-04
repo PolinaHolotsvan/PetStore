@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Add Pet</title>
+    <title>Add manager</title>
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -45,25 +45,31 @@
         </div>
     </nav>
 
-    <h3>Add New Pet</h3>
+    <h3>Add new manager</h3>
     <hr/>
 
     <form th:action="@{/manager/create}" th:object="${manager}" method="POST">
 
-    <input type="text" th:field="${manager.Name}" class="form-control col-4 mb-4" style="width: 50%"
-           placeholder="Enter date of birth"/>
+    <input type="text" th:field="${manager.name}" class="form-control col-4 mb-4" style="width: 50%"
+           placeholder="Enter name"/>
+        <ul>
+            <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error" />
+        </ul>
 
-    <select class="form-select" th:field="${manager.Gender}" style="width: 50%">
+    <select class="form-select" th:field="${manager.gender}" style="width: 50%">
         <option th:value="Male">Male</option>
         <option th:value="Female">Female</option>
         <option th:value="Nonbinary">Nonbinary</option>
     </select>
 
-    <input type="number" th:field="${manager.Salary}" class="form-control col-4 mb-4" placeholder="Enter salary" />
+    <input type="number" th:field="${manager.salary}" class="form-control col-4 mb-4" style="width: 50%" placeholder="Enter salary" />
+        <ul>
+            <li th:each="err : ${#fields.errors('salary')}" th:text="${err}" class="error" />
+        </ul>
 
 
         <select class="form-select" th:field="${manager.petStoreId}" style="width: 50%">
-            <option th:each="petStore: ${petStores}" th:value="${petStore.Id}" th:text="${petStore.Name}"></option>
+            <option th:each="petStore: ${petStores}" th:value="${petStore.id}" th:text="${petStore.name}"></option>
         </select>
 
 
