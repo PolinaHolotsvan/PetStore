@@ -13,8 +13,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav" style="font-size: large">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Director<span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/director/getAll}">Director</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" th:href="@{/goods/getAll}">Goods</a>
@@ -40,8 +40,7 @@
   </nav>
   <h2> Pet list</h2>
   </hr>
-  <a th:href="@{/pet/showAddForm}" class="btn btn-primary">Add Pet</a>
-  <a th:href="@{/addDirectorFormddd}" class="btn btn-primary">Download data</a>
+  <a th:href="@{/pet/showAddForm}" class="btn btn-primary">Add pet</a>
   <br/><br/>
   <table class="table table-bordered table-striped" id="employeeTable" style="background-color:#DDBC95">
     <thead>

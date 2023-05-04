@@ -25,13 +25,14 @@ public class PetStoreController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("petStore") @Valid PetStoreCreateModel model, BindingResult result) {
+    public String create(@ModelAttribute("petStore") @Valid PetStoreCreateModel model, BindingResult result, Model page) {
         String err = petStoreService.isUnique(model.getName());
         if (!err.isEmpty()) {
             var error = new FieldError("model", "name", err);
             result.addError(error);
         }
         if(result.hasErrors()){
+            page.addAttribute("directors", directorService.getAllFree());
             return "PetStorePages/PetStoreCreatePage";
         }
         petStoreService.create(model);

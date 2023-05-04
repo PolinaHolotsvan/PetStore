@@ -55,14 +55,14 @@
         </thead>
         <tbody>
         <tr th:each="goods1: ${goods}">
-            <td th:text ="${goods1.Id}"></td>
-            <td th:text ="${goods1.Name}"></td>
-            <td th:text ="${goods1.Category}"></td>
-            <td th:text ="${goods1.Price}"></td>
+            <td th:text ="${goods1.id}"></td>
+            <td th:text ="${goods1.name}"></td>
+            <td th:text ="${goods1.category}"></td>
+            <td th:text ="${goods1.price}"></td>
             <td th:text ="${goods1.petStoreName}"></td>
             <td>
-                <a th:href="@{/goods/showUpdateForm(id=${goods1.Id})}" class="btn btn-info" style="align-self: center; background-color:#F4D03F">Update</a>
-                <a th:href="@{/goods/delete(id=${goods1.Id})}" class="btn btn-danger ml-2" style="background-color:#EC7063">Delete</a>
+                <a th:href="@{/goods/showUpdateForm(id=${goods1.id})}" class="btn btn-info" style="align-self: center; background-color:#F4D03F">Update</a>
+                <a th:href="@{/goods/delete(id=${goods1.id})}" class="btn btn-danger ml-2" style="background-color:#EC7063">Delete</a>
             </td>
         </tr>
         </tbody>

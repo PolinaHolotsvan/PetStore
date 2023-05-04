@@ -42,8 +42,10 @@ public class PetController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("pet") @Valid PetCreateModel model, BindingResult result) {
+    public String create(@ModelAttribute("pet") @Valid PetCreateModel model, BindingResult result, Model page) {
         if(result.hasErrors()){
+            page.addAttribute("petStores", petStoreService.getAll());
+            page.addAttribute("species", speciesService.getAll());
             return "PetPages/PetCreatePage";
         }
         petService.create(model);

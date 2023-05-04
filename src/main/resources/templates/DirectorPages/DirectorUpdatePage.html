@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>Add Director</title>
+  <title>Update director</title>
 
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -44,7 +44,7 @@
     </div>
   </nav>
 
-  <h3>Add New Director</h3>
+  <h3>Add new director</h3>
   <hr/>
 
   <form th:action="@{/director/update}" th:object="${director}" method="POST">

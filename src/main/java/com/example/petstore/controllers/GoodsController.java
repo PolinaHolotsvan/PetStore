@@ -25,8 +25,9 @@ public class GoodsController {
 
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("goods") @Valid GoodsCreateModel model, BindingResult result) {
+    public String create(@ModelAttribute("goods") @Valid GoodsCreateModel model, BindingResult result, Model page) {
         if(result.hasErrors()){
+            page.addAttribute("petStores", petStoreService.getAll());
             return "GoodsPages/GoodsCreatePage";
         }
         goodsService.create(model);

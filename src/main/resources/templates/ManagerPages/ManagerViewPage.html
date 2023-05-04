@@ -38,9 +38,9 @@
             </ul>
         </div>
     </nav>
-    <h2> Pet list</h2>
+    <h2> Manager list</h2>
     </hr>
-    <a th:href="@{/manager/showAddForm}" class="btn btn-primary">Add goods</a>
+    <a th:href="@{/manager/showAddForm}" class="btn btn-primary">Add manager</a>
     <a th:href="@{/addDirectorFormddd}" class="btn btn-primary">Download data</a>
     <br/><br/>
     <table class="table table-bordered table-striped" id="employeeTable" style="background-color:#DDBC95">
@@ -56,14 +56,14 @@
         </thead>
         <tbody>
         <tr th:each="manager: ${managers}">
-            <td th:text ="${manager.Id}"></td>
-            <td th:text ="${manager.Name}"></td>
-            <td th:text ="${manager.Gender}"></td>
-            <td th:text ="${manager.Salary}"></td>
+            <td th:text ="${manager.id}"></td>
+            <td th:text ="${manager.name}"></td>
+            <td th:text ="${manager.gender}"></td>
+            <td th:text ="${manager.salary}"></td>
             <td th:text ="${manager.petStoreName}"></td>
             <td>
-                <a th:href="@{/manager/showUpdateForm(id=${manager.Id})}" class="btn btn-info" style="align-self: center">Update</a>
-                <a th:href="@{/manager/delete(id=${manager.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
+                <a th:href="@{/manager/showUpdateForm(id=${manager.id})}" class="btn btn-info" style="align-self: center">Update</a>
+                <a th:href="@{/manager/delete(id=${manager.id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
             </td>
         </tr>
         </tbody>
