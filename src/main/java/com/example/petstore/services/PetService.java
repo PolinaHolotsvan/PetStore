@@ -1,4 +1,4 @@
-package com.example.petstore.repositories;
+package com.example.petstore.services;
 
 import com.example.petstore.entities.Pet;
 import com.example.petstore.entities.PetStore;
@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class PetRepository {
+public class PetService {
     private final ModelMapper modelMapper;
     @PersistenceUnit(name = "Entities")
     private EntityManagerFactory entityManagerFactory;
 
-    public PetRepository(ModelMapper modelMapper) {
+    public PetService(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 

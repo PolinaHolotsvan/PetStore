@@ -2,10 +2,13 @@ package com.example.petstore.controllers;
 
 import com.example.petstore.models.managerModels.ManagerCreateModel;
 import com.example.petstore.models.managerModels.ManagerUpdateModel;
-import com.example.petstore.repositories.ManagerRepository;
-import com.example.petstore.repositories.PetStoreRepository;
+import com.example.petstore.services.ManagerService;
+import com.example.petstore.services.PetStoreService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -13,37 +16,45 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
-    private final PetStoreRepository petStoreRepository;
-    private final ManagerRepository managerRepository;
+    private final PetStoreService petStoreService;
+    private final ManagerService managerService;
 
-    public ManagerController(PetStoreRepository petStoreRepository, ManagerRepository managerRepository) {
-        this.petStoreRepository = petStoreRepository;
-        this.managerRepository = managerRepository;
+    public ManagerController(PetStoreService petStoreService, ManagerService managerService) {
+        this.petStoreService = petStoreService;
+        this.managerService = managerService;
     }
 
 
     @PostMapping("/create")
-    public String create(@ModelAttribute ManagerCreateModel model) {
-        managerRepository.create(model);
+    public String create(@ModelAttribute("manager") @Valid ManagerCreateModel model, BindingResult result) {
+        String err = managerService.isUnique(model.getName());
+        if (!err.isEmpty()) {
+            var error = new FieldError("model", "name", err);
+            result.addError(error);
+        }
+        if(result.hasErrors()){
+            return "ManagerPages/ManagerCreatePage";
+        }
+        managerService.create(model);
         return "redirect:/manager/getAll";
     }
 
     @GetMapping("/getAll")
     public String getAll(Model page) {
-        page.addAttribute("managers", managerRepository.getAll());
+        page.addAttribute("managers", managerService.getAll());
         return "ManagerPages/ManagerViewPage";
     }
 
     @GetMapping("/delete")
     public String delete(@RequestParam UUID id) {
-        managerRepository.delete(id);
+        managerService.delete(id);
         return "redirect:/manager/getAll";
     }
 
     @GetMapping("/showAddForm")
     public String showAddForm(Model page){
         page.addAttribute("manager", new ManagerCreateModel());
-        page.addAttribute("petStores", petStoreRepository.getAll());
+        page.addAttribute("petStores", petStoreService.getAll());
         return "ManagerPages/ManagerCreatePage";
     }
 
@@ -56,8 +67,16 @@ public class ManagerController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute ManagerUpdateModel model) {
-        managerRepository.update(model);
+    public String update(@ModelAttribute("manager") @Valid ManagerUpdateModel model, BindingResult result) {
+        String err = managerService.isUnique(model.getName());
+        if (!err.isEmpty()) {
+            var error = new FieldError("model", "name", err);
+            result.addError(error);
+        }
+        if(result.hasErrors()){
+            return "ManagerPages/ManagerUpdatePage";
+        }
+        managerService.update(model);
         return "redirect:/manager/getAll";
     }
 

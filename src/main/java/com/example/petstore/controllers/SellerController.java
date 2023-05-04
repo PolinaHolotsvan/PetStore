@@ -2,8 +2,8 @@ package com.example.petstore.controllers;
 
 import com.example.petstore.models.sellerModels.SellerCreateModel;
 import com.example.petstore.models.sellerModels.SellerUpdateModel;
-import com.example.petstore.repositories.PetStoreRepository;
-import com.example.petstore.repositories.SellerRepository;
+import com.example.petstore.services.PetStoreService;
+import com.example.petstore.services.SellerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,30 +13,30 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/seller")
 public class SellerController {
-    public final SellerRepository sellerRepository;
-    public final PetStoreRepository petStoreRepository;
+    public final SellerService sellerService;
+    public final PetStoreService petStoreService;
 
 
-    public SellerController(SellerRepository sellerRepository, PetStoreRepository petStoreRepository) {
-        this.sellerRepository = sellerRepository;
-        this.petStoreRepository = petStoreRepository;
+    public SellerController(SellerService sellerService, PetStoreService petStoreService) {
+        this.sellerService = sellerService;
+        this.petStoreService = petStoreService;
     }
 
     @GetMapping("/delete")
     public String delete(@RequestParam UUID id) {
-        sellerRepository.delete(id);
+        sellerService.delete(id);
         return "redirect:/seller/getAll";
     }
 
     @PostMapping("/update")
     public String update(@ModelAttribute SellerUpdateModel model) {
-        sellerRepository.update(model);
+        sellerService.update(model);
         return "redirect:/seller/getAll";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute SellerCreateModel model) {
-        sellerRepository.create(model);
+        sellerService.create(model);
         return "redirect:/seller/getAll";
     }
 
@@ -57,7 +57,7 @@ public class SellerController {
 
     @GetMapping("/getAll")
     public String getAll(Model page) {
-        page.addAttribute("sellers", sellerRepository.getAll());
+        page.addAttribute("sellers", sellerService.getAll());
         return "SellerPages/SellerViewPage";
     }
 
@@ -66,7 +66,7 @@ public class SellerController {
     public String showEmploymentFormCreate(Model page, @RequestParam UUID id){
         page.addAttribute("sellerId", id);
         page.addAttribute("petStoreId", UUID.randomUUID());
-        page.addAttribute("petStores", petStoreRepository.getAllUnemployed(id));
+        page.addAttribute("petStores", petStoreService.getAllUnemployed(id));
         return "SellerPages/EmploymentFormCreate";
     }
 
@@ -74,19 +74,19 @@ public class SellerController {
     public String showEmploymentFormDelete(Model page, @RequestParam UUID id){
         page.addAttribute("sellerId", id);
         page.addAttribute("petStoreId", UUID.randomUUID());
-        page.addAttribute("petStores", petStoreRepository.getAllEmployed(id));
+        page.addAttribute("petStores", petStoreService.getAllEmployed(id));
         return "SellerPages/EmploymentFormDelete";
     }
 
     @GetMapping("/removeSellerFromPetStore")
     public String removeSellerFromPetStore(@RequestParam UUID petStoreId, @RequestParam UUID sellerId) {
-        sellerRepository.removeSellerFromPetStore(petStoreId, sellerId);
+        sellerService.removeSellerFromPetStore(petStoreId, sellerId);
         return "redirect:/seller/getAll";
     }
 
     @GetMapping("/assignSellerToPetStore")
     public String assignSellerToPetStore(@RequestParam UUID petStoreId, @RequestParam UUID sellerId) {
-        sellerRepository.assignSellerToPetStore(petStoreId, sellerId);
+        sellerService.assignSellerToPetStore(petStoreId, sellerId);
         return "redirect:/seller/getAll";
     }
 

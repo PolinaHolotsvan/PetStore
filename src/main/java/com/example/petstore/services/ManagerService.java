@@ -1,7 +1,8 @@
-package com.example.petstore.repositories;
+package com.example.petstore.services;
 
 import com.example.petstore.entities.Manager;
 import com.example.petstore.entities.PetStore;
+import com.example.petstore.models.directorModels.DirectorViewModel;
 import com.example.petstore.models.managerModels.ManagerCreateModel;
 import com.example.petstore.models.managerModels.ManagerUpdateModel;
 import com.example.petstore.models.managerModels.ManagerViewModel;
@@ -13,14 +14,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 @Service
-public class ManagerRepository {
+public class ManagerService {
     private final ModelMapper modelMapper;
     @PersistenceUnit(name = "Entities")
     private EntityManagerFactory entityManagerFactory;
 
-    public ManagerRepository(ModelMapper modelMapper) {
+    public ManagerService(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
@@ -93,5 +95,21 @@ public class ManagerRepository {
         em.close();
 
         return model;
+    }
+
+    public String isUnique(String name){
+        List<ManagerViewModel> list= this.getAll();
+        for(ManagerViewModel managerViewModel: list){
+            if(Objects.equals(managerViewModel.getName(), name)) return "You can not use the same name twice";
+        }
+        return "";
+    }
+
+    public String isUnique2(String name, UUID id){
+        List<ManagerViewModel> list= this.getAll();
+        for(ManagerViewModel managerViewModel: list){
+            if((managerViewModel.getId()!=id) && managerViewModel.getName()==name) return "You can not use the same name twice";
+        }
+        return "";
     }
 }

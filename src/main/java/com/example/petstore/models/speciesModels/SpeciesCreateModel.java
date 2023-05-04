@@ -1,5 +1,7 @@
 package com.example.petstore.models.speciesModels;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,9 +9,9 @@ import lombok.Setter;
 @Setter
 public class SpeciesCreateModel {
     //@Size(min = 5, max = 250, message = "Invalid name length")
-    //@NotEmpty
+    @NotEmpty(message = "This field can not be empty")
     private String name;
-    //@Size(min = 5, max = 250, message = "Invalid name length")
-    //@NotEmpty
+    @Size(max = 250, message = "Invalid length")
+    @NotEmpty(message = "This field can not be empty")
     private String description;
 }

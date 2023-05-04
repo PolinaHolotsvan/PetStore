@@ -18,26 +18,26 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav" style="font-size: large">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Director<span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/director/getAll}">Director</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/addDirectorFormjj}">Goods</a>
+          <a class="nav-link" th:href="@{/goods/getAll}">Goods</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Manager</a>
+          <a class="nav-link" th:href="@{/manager/getAll}">Manager</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pet</a>
+          <a class="nav-link" th:href="@{/pet/getAll}">Pet</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">PetStore</a>
+          <a class="nav-link" th:href="@{/petStore/getAll}">PetStore</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Seller</a>
+          <a class="nav-link" th:href="@{/seller/getAll}">Seller</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Species</a>
+          <a class="nav-link" th:href="@{/species/getAll}">Species</a>
         </li>
 
       </ul>
@@ -49,8 +49,10 @@
 
   <form th:action="@{/director/update}" th:object="${director}" method="POST">
 
-    <input type="text" th:field="${director.Name}" class="form-control col-4 mb-4" style="width: 50%" placeholder="Enter Name" />
-
+    <input type="text" th:field="${director.name}" class="form-control col-4 mb-4" style="width: 50%" placeholder="Enter Name" />
+    <ul>
+      <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error"  />
+    </ul>
 
     <select class="form-select" th:field="${director.Gender}" style="width: 50%">
       <option th:value="Male">Male</option>
@@ -58,9 +60,12 @@
       <option th:value="Nonbinary">Nonbinary</option>
     </select>
 
-    <input type="number" th:field="${director.Salary}" class="form-control col-4 mb-4" placeholder="Enter Salary" />
+    <input type="number" th:field="${director.salary}" class="form-control col-4 mb-4" placeholder="Enter Salary" />
+    <ul>
+      <li th:each="err : ${#fields.errors('salary')}" th:text="${err}" class="error" />
+    </ul>
 
-    <input type="hidden" th:field="${director.Id}" />
+    <input type="hidden" th:field="${director.id}" />
 
     <button type="submit" class="btn btn-primary col-2">Save</button>
 

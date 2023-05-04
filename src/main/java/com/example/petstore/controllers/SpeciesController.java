@@ -2,7 +2,7 @@ package com.example.petstore.controllers;
 
 import com.example.petstore.models.speciesModels.SpeciesCreateModel;
 import com.example.petstore.models.speciesModels.SpeciesUpdateModel;
-import com.example.petstore.repositories.SpeciesRepository;
+import com.example.petstore.services.SpeciesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,27 +12,27 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/species")
 public class SpeciesController {
-    public final SpeciesRepository speciesRepository;
+    public final SpeciesService speciesService;
 
-    public SpeciesController(SpeciesRepository speciesRepository) {
-        this.speciesRepository = speciesRepository;
+    public SpeciesController(SpeciesService speciesService) {
+        this.speciesService = speciesService;
     }
 
     @GetMapping("/delete")
     public String delete(@RequestParam UUID id) {
-        speciesRepository.delete(id);
+        speciesService.delete(id);
         return "redirect:/species/getAll";
     }
 
     @PostMapping("/update")
     public String update(@ModelAttribute SpeciesUpdateModel model) {
-        speciesRepository.update(model);
+        speciesService.update(model);
         return "redirect:/species/getAll";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute SpeciesCreateModel model) {
-        speciesRepository.create(model);
+        speciesService.create(model);
         return "redirect:/species/getAll";
     }
 
@@ -53,18 +53,7 @@ public class SpeciesController {
 
     @GetMapping("/getAll")
     public String getAll(Model page) {
-        page.addAttribute("species", speciesRepository.getAll());
+        page.addAttribute("species", speciesService.getAll());
         return "SpeciesPages/SpeciesViewPage";
     }
-
-    /*@GetMapping("/getById")
-    public SpeciesViewModel getById(@RequestParam UUID id) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-
-        Species species = em.find(Species.class, id);
-        SpeciesViewModel model = modelMapper.map(species, SpeciesViewModel.class);
-        model.convertPets(species.getPets());
-
-        return model;
-    }*/
 }

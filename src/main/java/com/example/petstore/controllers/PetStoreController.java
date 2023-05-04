@@ -2,8 +2,8 @@ package com.example.petstore.controllers;
 
 import com.example.petstore.models.petStoreModels.PetStoreCreateModel;
 import com.example.petstore.models.petStoreModels.PetStoreUpdateModel;
-import com.example.petstore.repositories.DirectorRepository;
-import com.example.petstore.repositories.PetStoreRepository;
+import com.example.petstore.services.DirectorService;
+import com.example.petstore.services.PetStoreService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,52 +13,36 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/petStore")
 public class PetStoreController {
-    private final PetStoreRepository petStoreRepository;
-    private final DirectorRepository directorRepository;
+    private final PetStoreService petStoreService;
+    private final DirectorService directorService;
 
-    public PetStoreController(PetStoreRepository petStoreRepository, DirectorRepository directorRepository) {
-        this.petStoreRepository = petStoreRepository;
-        this.directorRepository = directorRepository;
+    public PetStoreController(PetStoreService petStoreService, DirectorService directorService) {
+        this.petStoreService = petStoreService;
+        this.directorService = directorService;
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute PetStoreCreateModel model) {
-        petStoreRepository.create(model);
+        petStoreService.create(model);
         return "redirect:/petStore/getAll";
     }
 
     @GetMapping("/getAll")
     public String getAll(Model page) {
-        page.addAttribute("petStores", petStoreRepository.getAll());
+        page.addAttribute("petStores", petStoreService.getAll());
         return "PetStorePages/PetStoreViewPage";
     }
 
-    /*@GetMapping("/getById")
-    public PetStoreViewModel getById(@RequestParam UUID id) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-
-        PetStore petStore = em.find(PetStore.class, id);
-        PetStoreViewModel model = modelMapper.map(petStore, PetStoreViewModel.class);
-
-        model.convertPets(petStore.getPets());
-        model.convertGoods(petStore.getGoods());
-        model.convertManagers(petStore.getManagers());
-        model.convertSellers(petStore.getSellers());
-        model.convertDirector(petStore.getDirector());
-
-        return model;
-    }*/
-
     @GetMapping("/delete")
     public String delete(@RequestParam UUID id) {
-        petStoreRepository.delete(id);
+        petStoreService.delete(id);
         return "redirect:/petStore/getAll";
     }
 
     @GetMapping("/showAddForm")
     public String showAddForm(Model page){
         page.addAttribute("petStore", new PetStoreCreateModel());
-        page.addAttribute("directors", directorRepository.getAllFree());
+        page.addAttribute("directors", directorService.getAllFree());
         return "PetStorePages/PetStoreCreatePage";
     }
 
@@ -72,7 +56,7 @@ public class PetStoreController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute PetStoreUpdateModel model) {
-        petStoreRepository.update(model);
+        petStoreService.update(model);
         return "redirect:/petStore/getAll";
     }
 }
