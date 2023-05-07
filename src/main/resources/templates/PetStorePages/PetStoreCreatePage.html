@@ -50,7 +50,7 @@
     <hr/>
 
     <form th:action="@{/petStore/create}" th:object="${petStore}" method="POST">
-        <h4>Enter rating</h4>
+        <h4>Enter name</h4>
         <input type="text" th:field="${petStore.name}" class="form-control col-4 mb-4" style="width: 50%"/>
         <ul>
             <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error" />
@@ -62,10 +62,10 @@
         </ul>
 
         <h4>Choose director</h4>
-        <select class="form-select" th:field="${petStore.directorId}" style="width: 50%">
+        <select class="form-select" th:field="${petStore.directorId}">
             <option th:each="director: ${directors}" th:value="${director.id}" th:text="${director.name}"></option>
         </select>
-
+        <h6></h6>
         <button type="submit" class="btn btn-primary col-2">Save</button>
 
     </form>

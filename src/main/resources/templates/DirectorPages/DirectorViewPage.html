@@ -5,6 +5,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body style="background-color:#EBDCB2">
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#B38867">
 
@@ -50,7 +55,7 @@
             <th>Name</th>
             <th>Gender</th>
             <th>Salary</th>
-            <th>PetStoreId</th>
+            <th>Pet store</th>
         </tr>
         </thead>
         <tbody>
@@ -65,8 +70,44 @@
                 <a th:href="@{/director/delete(id=${director.id})}" class="btn btn-danger ml-2" style="background-color:#EC7063">Delete</a>
             </td>
         </tr>
+
         </tbody>
     </table>
+    <div id="container" style="height: 400px"></div>
+    <script th:inline="javascript">
+        Highcharts.chart('container', {
+            chart : {
+                type : 'pie',
+                options3d : {
+                    enabled : true,
+                    alpha : 50,
+                    beta : 0
+                }
+            },
+            title : {
+                text : 'Result Data'
+            },
+            tooltip : {
+                pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions : {
+                pie : {
+                    allowPointSelect : true,
+                    cursor : 'pointer',
+                    depth : 35,
+                    dataLabels : {
+                        enabled : true,
+                        format : '{point.name}'
+                    }
+                }
+            },
+            series : [ {
+                type : 'pie',
+                name : 'Ratio',
+                data : [ [ 'Male', [[${Male}]] ], [ 'Female', [[${Female}]] ], [ 'Nonbinary', [[${Nonbinary}]] ]  ]
+            } ]
+        });
+    </script>
 </div>
 </body>
 </html>

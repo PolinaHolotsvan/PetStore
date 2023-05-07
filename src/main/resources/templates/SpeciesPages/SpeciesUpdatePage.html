@@ -8,7 +8,7 @@
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
           crossorigin="anonymous" />
 </head>
-<body>
+<body style="background-color:#EBDCB2">
 
 <div class="container" style="alignment: center">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#B38867">
@@ -18,26 +18,26 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav" style="font-size: large">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Director<span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/director/getAll}">Director</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/addDirectorFormjj}">Goods</a>
+                    <a class="nav-link" th:href="@{/goods/getAll}">Goods</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Manager</a>
+                    <a class="nav-link" th:href="@{/manager/getAll}">Manager</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Pet</a>
+                    <a class="nav-link" th:href="@{/pet/getAll}">Pet</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">PetStore</a>
+                    <a class="nav-link" th:href="@{/petStore/getAll}">PetStore</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Seller</a>
+                    <a class="nav-link" th:href="@{/seller/getAll}">Seller</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Species</a>
+                    <a class="nav-link" th:href="@{/species/getAll}">Species</a>
                 </li>
 
             </ul>
@@ -49,14 +49,21 @@
 
     <form th:action="@{/species/update}" th:object="${species}" method="POST">
 
-        <input type="text" th:field="${species.Name}" class="form-control col-4 mb-4" style="width: 50%" placeholder="Enter Name" />
+        <h4>Enter name</h4>
+        <input type="text" th:field="${species.name}" class="form-control col-4 mb-4" style="width: 50%"/>
+        <ul>
+            <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error" />
+        </ul>
+        <h4>Enter description</h4>
 
-
-        <input type="text" th:field="${species.Description}" class="form-control col-4 mb-4" placeholder="Enter Salary" />
+        <input type="text" th:field="${species.description}" class="form-control col-4 mb-4"/>
+        <ul>
+            <li th:each="err : ${#fields.errors('description')}" th:text="${err}" class="error" />
+        </ul>
 
         <input type="hidden" th:field="${species.Id}" />
 
-        <button type="submit" class="btn btn-primary col-2">Save</button>
+        <button type="submit" class="btn btn-primary col-2">Update</button>
 
     </form>
     <hr/>

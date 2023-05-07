@@ -67,13 +67,13 @@
         <h4>Choose pet store</h4>
 
 
-        <select class="form-select" th:field="${pet.petStoreId}" style="width: 50%">
+        <select class="form-select" th:field="${pet.petStoreId}">
             <option th:each="petStore: ${petStores}" th:value="${petStore.id}" th:text="${petStore.name}"></option>
         </select>
 
         <h4>Enter species</h4>
 
-        <select class="form-select" th:field="${pet.speciesId}" style="width: 50%">
+        <select class="form-select" th:field="${pet.speciesId}">
             <option th:each="species1: ${species}" th:value="${species1.id}" th:text="${species1.name}"></option>
         </select>
         <h6></h6>
@@ -86,5 +86,5 @@
     <a th:href="@{/pet/getAll}">Back to list</a>
 </div>
 
-</>
+</body>
 </html>

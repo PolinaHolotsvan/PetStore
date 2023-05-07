@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <title>Goods list</title>
+    <title>Manager list</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body style="background-color:#EBDCB2">
@@ -41,7 +41,6 @@
     <h2> Manager list</h2>
     </hr>
     <a th:href="@{/manager/showAddForm}" class="btn btn-primary">Add manager</a>
-    <a th:href="@{/addDirectorFormddd}" class="btn btn-primary">Download data</a>
     <br/><br/>
     <table class="table table-bordered table-striped" id="employeeTable" style="background-color:#DDBC95">
         <thead>
@@ -50,7 +49,7 @@
             <th>Name</th>
             <th>Gender</th>
             <th>Salary</th>
-            <th>PetStoreId</th>
+            <th>Pet store</th>
 
         </tr>
         </thead>

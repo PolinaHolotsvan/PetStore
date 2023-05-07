@@ -102,24 +102,6 @@ public class PetStoreService {
         em.close();
     }
 
-    public List<PetStoreViewModel> getAllEmployed(UUID id){
-        List<PetStoreViewModel> list=new ArrayList<>();
-        for(PetStoreViewModel model:this.getAll()){
-            if(model.getSellerIds().contains(id))
-                list.add(model);
-        }
-        return list;
-    }
-
-    public List<PetStoreViewModel> getAllUnemployed(UUID id){
-        List<PetStoreViewModel> list=new ArrayList<>();
-        for(PetStoreViewModel model:this.getAll()){
-            if(!model.getSellerIds().contains(id))
-                list.add(model);
-        }
-        return list;
-    }
-
     public String isUnique(String name){
         List<PetStoreViewModel> list= this.getAll();
         for(PetStoreViewModel petStoreViewModel: list){
@@ -134,5 +116,12 @@ public class PetStoreService {
             if((petStoreViewModel.getId()!=id) && petStoreViewModel.getName()==name) return "You can not use the same name twice";
         }
         return "";
+    }
+
+    public List<PetStoreViewModel> getEmployed(UUID id){
+        return this.getAll().stream().filter(t -> t.getSellerIds().contains(id)).toList();
+    }
+    public List<PetStoreViewModel> getUnemployed(UUID id){
+        return this.getAll().stream().filter(t -> !t.getSellerIds().contains(id)).toList();
     }
 }

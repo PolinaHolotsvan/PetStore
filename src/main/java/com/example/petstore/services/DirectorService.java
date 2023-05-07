@@ -11,6 +11,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
+
+import static com.example.petstore.entities.Sex.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,15 +38,8 @@ public class DirectorService{
     }
 
     public List<DirectorViewModel> getAllFree(){
-
         List<DirectorViewModel> models = this.getAll().stream()
                 .filter(t -> t.getPetStoreName() == null)
-                .map(t -> {
-                    DirectorViewModel model;
-                    model=modelMapper.map(t, DirectorViewModel.class);
-                    model.setPetStoreName(t.getPetStoreName());
-                    return model;
-                })
                 .toList();
         return models;
     }
@@ -81,5 +78,17 @@ public class DirectorService{
             if((directorViewModel.getId()!=id) && directorViewModel.getName()==name) return "You can not use the same name twice";
         }
         return "";
+    }
+
+    public double[] getStatistics(){
+        List<DirectorViewModel> maleDirectors=getAll().stream().filter(t-> t.getGender()==Male).toList();
+        List<DirectorViewModel> femaleDirectors=getAll().stream().filter(t-> t.getGender()==Female).toList();
+        List<DirectorViewModel> nonbinaryDirectors=getAll().stream().filter(t-> t.getGender()==Nonbinary).toList();
+        double[] statistics=new double[3];
+        Function<List, Double> getResult = (list) -> (double)list.size()/getAll().size()*100;
+        statistics[0]=getResult.apply(maleDirectors);
+        statistics[1]=getResult.apply(femaleDirectors);
+        statistics[2]=getResult.apply(nonbinaryDirectors);
+        return statistics;
     }
 }

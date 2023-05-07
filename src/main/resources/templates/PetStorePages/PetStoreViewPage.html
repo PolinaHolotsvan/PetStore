@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <title>Pet list</title>
+    <title>Pet store list</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body style="background-color:#EBDCB2">
@@ -38,10 +38,9 @@
             </ul>
         </div>
     </nav>
-    <h2> Pet list</h2>
+    <h2> Pet store list</h2>
     </hr>
     <a th:href="@{/petStore/showAddForm}" class="btn btn-primary">Add pet store</a>
-    <a th:href="@{/addDirectorFormddd}" class="btn btn-primary">Download data</a>
     <br/><br/>
     <table class="table table-bordered table-striped" id="employeeTable" style="background-color:#DDBC95">
         <thead>
@@ -50,10 +49,10 @@
             <th>Name</th>
             <th>Rating</th>
             <th>DirectorId</th>
-            <th>GoodsId</th>
-            <th>ManagersId</th>
-            <th>SellersId</th>
-            <th>PetsId</th>
+            <th>Goods</th>
+            <th>Managers</th>
+            <th>Sellers</th>
+            <th>Pets</th>
 
         </tr>
         </thead>

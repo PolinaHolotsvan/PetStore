@@ -65,27 +65,27 @@ public class SellerController {
     @GetMapping("/showEmploymentFormCreate")
     public String showEmploymentFormCreate(Model page, @RequestParam UUID id){
         page.addAttribute("sellerId", id);
-        page.addAttribute("petStoreId", UUID.randomUUID());
-        page.addAttribute("petStores", petStoreService.getAllUnemployed(id));
+        page.addAttribute("petStoreId");
+        page.addAttribute("petStores", petStoreService.getUnemployed(id));
         return "SellerPages/EmploymentFormCreate";
     }
 
     @GetMapping("/showEmploymentFormDelete")
     public String showEmploymentFormDelete(Model page, @RequestParam UUID id){
         page.addAttribute("sellerId", id);
-        page.addAttribute("petStoreId", UUID.randomUUID());
-        page.addAttribute("petStores", petStoreService.getAllEmployed(id));
+        page.addAttribute("petStoreId");
+        page.addAttribute("petStores", petStoreService.getEmployed(id));
         return "SellerPages/EmploymentFormDelete";
     }
 
     @GetMapping("/removeSellerFromPetStore")
-    public String removeSellerFromPetStore(@RequestParam UUID petStoreId, @RequestParam UUID sellerId) {
+    public String removeSellerFromPetStore(@RequestParam(value = "petStoreId") UUID petStoreId, @RequestParam(value = "sellerId") UUID sellerId) {
         sellerService.removeSellerFromPetStore(petStoreId, sellerId);
         return "redirect:/seller/getAll";
     }
 
     @GetMapping("/assignSellerToPetStore")
-    public String assignSellerToPetStore(@RequestParam UUID petStoreId, @RequestParam UUID sellerId) {
+    public String assignSellerToPetStore(@RequestParam(value = "petStoreId") UUID petStoreId, @RequestParam(value = "sellerId") UUID sellerId) {
         sellerService.assignSellerToPetStore(petStoreId, sellerId);
         return "redirect:/seller/getAll";
     }

@@ -19,11 +19,6 @@ public class PetStoreViewModel extends PetStoreUpdateModel {
     public void convertSellers(List<Seller> sellers) {
         for (Seller seller : sellers) {
             sellerNames.add(seller.getName());
-        }
-    }
-
-    public void convertSellers2(List<Seller> sellers) {
-        for (Seller seller : sellers) {
             sellerIds.add(seller.getId());
         }
     }
