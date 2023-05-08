@@ -78,9 +78,16 @@ public class DirectorController {
     @GetMapping("/getAll")
     public String getAll(Model page) {
         page.addAttribute("directors", directorService.getAll());
-        page.addAttribute("Male", directorService.getStatistics()[0]);
-        page.addAttribute("Female", directorService.getStatistics()[1]);
-        page.addAttribute("Nonbinary", directorService.getStatistics()[2]);
+        if(!directorService.getAll().isEmpty()){
+            page.addAttribute("Male", directorService.getStatistics()[0]);
+            page.addAttribute("Female", directorService.getStatistics()[1]);
+            page.addAttribute("Nonbinary", directorService.getStatistics()[2]);
+        }
+        else {
+            page.addAttribute("Male", 0);
+            page.addAttribute("Female", 0);
+            page.addAttribute("Nonbinary", 0);
+        }
         return "DirectorPages/DirectorViewPage";
     }
 

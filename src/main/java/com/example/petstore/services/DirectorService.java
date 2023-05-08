@@ -81,14 +81,18 @@ public class DirectorService{
     }
 
     public double[] getStatistics(){
+        double[] statistics={0,0,0};
         List<DirectorViewModel> maleDirectors=getAll().stream().filter(t-> t.getGender()==Male).toList();
         List<DirectorViewModel> femaleDirectors=getAll().stream().filter(t-> t.getGender()==Female).toList();
         List<DirectorViewModel> nonbinaryDirectors=getAll().stream().filter(t-> t.getGender()==Nonbinary).toList();
-        double[] statistics=new double[3];
+
         Function<List, Double> getResult = (list) -> (double)list.size()/getAll().size()*100;
+
         statistics[0]=getResult.apply(maleDirectors);
         statistics[1]=getResult.apply(femaleDirectors);
         statistics[2]=getResult.apply(nonbinaryDirectors);
+
+
         return statistics;
     }
 }

@@ -40,7 +40,7 @@
     </nav>
     <h2> Seller list</h2>
     </hr>
-    <a th:href="@{/seller/showAddForm}" class="btn btn-primary">Add seller</a>
+    <a th:href="@{/seller/showAddForm}" class="btn btn-primary" style="background-color:#7DCEA0">Add seller</a>
     <br/><br/>
     <table class="table table-bordered table-striped" id="employeeTable" style="background-color:#DDBC95">
         <thead>
@@ -60,10 +60,10 @@
             <td th:text ="${seller.Salary}"></td>
             <td th:text ="${seller.petStoreNames}"></td>
             <td>
-                <a th:href="@{/seller/showUpdateForm(id=${seller.Id})}" class="btn btn-info" style="align-self: center">Update</a>
-                <a th:href="@{/seller/delete(id=${seller.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
+                <a th:href="@{/seller/showUpdateForm(id=${seller.Id})}" class="btn btn-info" style="align-self: center; background-color:#F4D03F">Update</a>
+                <a th:href="@{/seller/delete(id=${seller.Id})}" class="btn btn-danger ml-2" style="background-color:#EC7063">Delete</a>
                 <a th:href="@{/seller/showEmploymentFormCreate(id=${seller.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Apply</a>
-                <a th:href="@{/seller/showEmploymentFormDelete(id=${seller.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Retire</a>
+                <a th:href="@{/seller/showEmploymentFormDelete(id=${seller.Id})}" class="btn btn-danger ml-2" style="background-color:#7FB5B5">Retire</a>
             </td>
         </tr>
         </tbody>

@@ -7,12 +7,15 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.lang.annotation.Inherited;
 
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class DirectorCreateModel {
     @NotEmpty(message = "This field can not be empty")
     @Pattern(regexp = "[a-zA-Z0-9]+\s[a-zA-Z0-9]+",

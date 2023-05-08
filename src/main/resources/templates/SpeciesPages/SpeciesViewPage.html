@@ -40,7 +40,7 @@
     </nav>
     <h2> Species list</h2>
     </hr>
-    <a th:href="@{/species/showAddForm}" class="btn btn-primary">Add species</a>
+    <a th:href="@{/species/showAddForm}" class="btn btn-primary" style="background-color:#7DCEA0">Add species</a>
     <br/><br/>
     <table class="table table-bordered table-striped" id="employeeTable" style="background-color:#DDBC95">
         <thead>
@@ -56,10 +56,10 @@
             <td th:text ="${species1.Id}"></td>
             <td th:text ="${species1.Name}"></td>
             <td th:text ="${species1.Description}"></td>
-            <td th:text ="${species1.petIds}"></td>
+            <td th:text ="${#lists.size(species1.petIds)}"></td>
             <td>
-                <a th:href="@{/species/showUpdateForm(id=${species1.Id})}" class="btn btn-info" style="align-self: center">Update</a>
-                <a th:href="@{/species/delete(id=${species1.Id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
+                <a th:href="@{/species/showUpdateForm(id=${species1.Id})}" class="btn btn-info" style="align-self: center; background-color:#F4D03F">Update</a>
+                <a th:href="@{/species/delete(id=${species1.Id})}" class="btn btn-danger ml-2" style="background-color:#EC7063">Delete</a>
             </td>
         </tr>
         </tbody>

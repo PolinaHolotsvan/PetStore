@@ -4,10 +4,14 @@ import com.example.petstore.models.sellerModels.SellerCreateModel;
 import com.example.petstore.models.sellerModels.SellerUpdateModel;
 import com.example.petstore.services.PetStoreService;
 import com.example.petstore.services.SellerService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.BindException;
 import java.util.UUID;
 
 @Controller
@@ -29,13 +33,29 @@ public class SellerController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute SellerUpdateModel model) {
+    public String update(@ModelAttribute("seller") @Valid SellerUpdateModel model, BindingResult result) {
+        String err = sellerService.isUnique(model.getName());
+        if (!err.isEmpty()) {
+            var error = new FieldError("model", "name", err);
+            result.addError(error);
+        }
+        if(result.hasErrors()){
+            return "SellerPages/SellerUpdatePage";
+        }
         sellerService.update(model);
         return "redirect:/seller/getAll";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute SellerCreateModel model) {
+    public String create(@ModelAttribute("seller") @Valid SellerCreateModel model, BindingResult result) {
+        String err = sellerService.isUnique(model.getName());
+        if (!err.isEmpty()) {
+            var error = new FieldError("model", "name", err);
+            result.addError(error);
+        }
+        if(result.hasErrors()){
+            return "SellerPages/SellerCreatePage";
+        }
         sellerService.create(model);
         return "redirect:/seller/getAll";
     }

@@ -56,7 +56,7 @@
             <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="error" />
         </ul>
         <h4>Choose gender</h4>
-        <select class="form-select" th:field="${manager.gender}" style="width: 50%">
+        <select class="form-select" th:field="${manager.gender}">
             <option th:value="Male">Male</option>
             <option th:value="Female">Female</option>
             <option th:value="Nonbinary">Nonbinary</option>

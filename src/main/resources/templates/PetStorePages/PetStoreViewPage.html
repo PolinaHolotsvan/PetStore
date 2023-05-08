@@ -40,7 +40,7 @@
     </nav>
     <h2> Pet store list</h2>
     </hr>
-    <a th:href="@{/petStore/showAddForm}" class="btn btn-primary">Add pet store</a>
+    <a th:href="@{/petStore/showAddForm}" class="btn btn-primary" style="background-color:#7DCEA0">Add pet store</a>
     <br/><br/>
     <table class="table table-bordered table-striped" id="employeeTable" style="background-color:#DDBC95">
         <thead>
@@ -67,8 +67,8 @@
             <td th:text ="${petStore.sellerNames}"></td>
             <td th:text ="${#lists.size(petStore.petIds)}"></td>
             <td>
-                <a th:href="@{/petStore/showUpdateForm(id=${petStore.id})}" class="btn btn-info" style="align-self: center">Update</a>
-                <a th:href="@{/petStore/delete(id=${petStore.id})}" class="btn btn-danger ml-2" style="background-color:#EBDC">Delete</a>
+                <a th:href="@{/petStore/showUpdateForm(id=${petStore.id})}" class="btn btn-info" style="align-self: center; background-color:#F4D03F">Update</a>
+                <a th:href="@{/petStore/delete(id=${petStore.id})}" class="btn btn-danger ml-2" style="background-color:#EC7063">Delete</a>
             </td>
         </tr>
         </tbody>
